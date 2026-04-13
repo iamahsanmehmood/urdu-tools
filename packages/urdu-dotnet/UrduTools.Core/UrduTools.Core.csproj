@@ -8,9 +8,17 @@
     <RootNamespace>UrduTools.Core</RootNamespace>
     <PackageId>UrduTools.Core</PackageId>
     <Version>1.0.0</Version>
-    <Authors>UrduTools</Authors>
-    <Description>Comprehensive Urdu text processing library — normalization, analysis, search, numbers, tokenization, string utilities, sorting, and transliteration.</Description>
-    <PackageTags>urdu;arabic;nlp;text;unicode;rtl</PackageTags>
+    <Authors>Ahsan Mehmood</Authors>
+    <Description>Comprehensive Urdu text processing library — normalization, analysis, search, numbers, tokenization, string utilities, sorting, and transliteration. Zero dependencies.</Description>
+    <PackageTags>urdu;arabic;nlp;text;unicode;rtl;normalization</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/iamahsanmehmood/urdu-tools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/iamahsanmehmood/urdu-tools</PackageProjectUrl>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>

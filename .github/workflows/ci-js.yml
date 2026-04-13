@@ -25,6 +25,6 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @urdu-tools/core typecheck
-      - run: pnpm --filter @urdu-tools/core test:coverage
-      - run: pnpm --filter @urdu-tools/core build
+      - run: pnpm --filter @iamahsanmehmood/urdu-tools typecheck
+      - run: pnpm --filter @iamahsanmehmood/urdu-tools test:coverage
+      - run: pnpm --filter @iamahsanmehmood/urdu-tools build

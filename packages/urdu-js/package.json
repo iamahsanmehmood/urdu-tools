@@ -1,5 +1,5 @@
 {
-  "name": "@urdu-tools/core",
+  "name": "@iamahsanmehmood/urdu-tools",
   "version": "1.0.0",
   "type": "module",
   "exports": {
@@ -17,6 +17,18 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "description": "Production-quality Urdu text processing — normalization, search, numbers, tokenization, sorting, transliteration, encoding. Zero dependencies.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamahsanmehmood/urdu-tools"
+  },
+  "homepage": "https://github.com/iamahsanmehmood/urdu-tools#readme",
+  "license": "MIT",
+  "keywords": ["urdu", "arabic", "nlp", "unicode", "rtl", "normalization", "text-processing"],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
   "files": ["dist"],
   "scripts": {
     "build": "tsup",
