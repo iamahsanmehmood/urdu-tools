@@ -1,0 +1,34 @@
+{
+  "name": "@urdu-tools/core",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": { "import": "./dist/index.js", "require": "./dist/index.cjs", "types": "./dist/index.d.ts" },
+    "./normalization": { "import": "./dist/normalization/index.js", "require": "./dist/normalization/index.cjs", "types": "./dist/normalization/index.d.ts" },
+    "./analysis": { "import": "./dist/analysis/index.js", "require": "./dist/analysis/index.cjs", "types": "./dist/analysis/index.d.ts" },
+    "./search": { "import": "./dist/search/index.js", "require": "./dist/search/index.cjs", "types": "./dist/search/index.d.ts" },
+    "./numbers": { "import": "./dist/numbers/index.js", "require": "./dist/numbers/index.cjs", "types": "./dist/numbers/index.d.ts" },
+    "./tokenization": { "import": "./dist/tokenization/index.js", "require": "./dist/tokenization/index.cjs", "types": "./dist/tokenization/index.d.ts" },
+    "./string-utils": { "import": "./dist/string-utils/index.js", "require": "./dist/string-utils/index.cjs", "types": "./dist/string-utils/index.d.ts" },
+    "./encoding": { "import": "./dist/encoding/index.js", "require": "./dist/encoding/index.cjs", "types": "./dist/encoding/index.d.ts" },
+    "./sorting": { "import": "./dist/sorting/index.js", "require": "./dist/sorting/index.cjs", "types": "./dist/sorting/index.d.ts" },
+    "./transliteration": { "import": "./dist/transliteration/index.js", "require": "./dist/transliteration/index.cjs", "types": "./dist/transliteration/index.d.ts" }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "tsup": "^8.3.0",
+    "vitest": "^2.1.0",
+    "@vitest/coverage-v8": "^2.1.0"
+  }
+}
