@@ -25,7 +25,7 @@ Thank you for helping make Urdu software better. This guide covers everything yo
 ### Clone and install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/urdu-tools.git
+git clone https://github.com/iamahsanmehmood/urdu-tools.git
 cd urdu-tools
 pnpm install
 ```
@@ -224,4 +224,4 @@ The source of the text matters — characters from different sources can look id
 
 ## Questions?
 
-Open a [GitHub Discussion](https://github.com/YOUR_USERNAME/urdu-tools/discussions) or file an issue.
+Open a [GitHub Discussion](https://github.com/iamahsanmehmood/urdu-tools/discussions) or file an issue.

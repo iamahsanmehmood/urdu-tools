@@ -8,8 +8,8 @@
 
 > Production-quality Urdu text processing — TypeScript and C#/.NET, zero dependencies.
 
-[![CI – JS](https://github.com/YOUR_USERNAME/urdu-tools/actions/workflows/ci-js.yml/badge.svg)](https://github.com/YOUR_USERNAME/urdu-tools/actions/workflows/ci-js.yml)
-[![CI – .NET](https://github.com/YOUR_USERNAME/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg)](https://github.com/YOUR_USERNAME/urdu-tools/actions/workflows/ci-dotnet.yml)
+[![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
+[![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![npm](https://img.shields.io/npm/v/@urdu-tools/core)](https://www.npmjs.com/package/@urdu-tools/core)
 [![NuGet](https://img.shields.io/nuget/v/UrduTools.Core)](https://www.nuget.org/packages/UrduTools.Core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
