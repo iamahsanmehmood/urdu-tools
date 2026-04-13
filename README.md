@@ -10,9 +10,13 @@
 
 [![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
 [![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
+[![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc)](https://iamahsanmehmood.github.io/urdu-tools/playground/)
 [![npm](https://img.shields.io/badge/npm-GitHub%20Packages-blue)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
 [![NuGet](https://img.shields.io/badge/nuget-GitHub%20Packages-blue)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> **[▶ Try it live in your browser →](https://iamahsanmehmood.github.io/urdu-tools/playground/)**  
+> Interactive playground — test every function with real Urdu text, no install needed.
 
 Urdu is technically one of the most demanding languages to process correctly in software. Characters from the Arabic block overlap with Urdu code points, invisible zero-width joiners silently break string equality, diacritical marks cause identical-looking words to fail lookups, and the South Asian numbering system exceeds JavaScript's safe integer range. This library was built from real production bugs across four different Urdu software projects and handles all of them.
 

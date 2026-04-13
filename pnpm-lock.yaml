@@ -27,6 +27,19 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9
 
+  playground:
+    dependencies:
+      '@iamahsanmehmood/urdu-tools':
+        specifier: workspace:*
+        version: link:../packages/urdu-js
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vite:
+        specifier: ^5.0.0
+        version: 5.4.21
+
 packages:
 
   '@ampproject/remapping@2.3.0':
