@@ -840,11 +840,11 @@ wire('btn-match', () => {
   try {
     const q = $v('m-q'), t = $v('m-t')
     const result = match(q, t)
-    if (result) {
+    if (result.matched) {
       setResultHTML('r-match', `
         <span class="match-badge yes">✓ Matched</span>
-        <div class="match-layer">Layer ${result.layer}: <strong>${result.strategy}</strong></div>
-        <div class="result-meta" style="margin-top:8px">Query fingerprint: ${toUniEsc(q)} | Target: ${toUniEsc(t)}</div>`, 'matched')
+        <div class="match-layer">Layer: <strong>${esc(result.layer ?? '')}</strong></div>
+        <div class="result-meta" style="margin-top:8px">Normalized query: ${toUniEsc(result.normalizedQuery)} → target: ${toUniEsc(result.normalizedTarget)}</div>`, 'matched')
     } else {
       setResultHTML('r-match', `<span class="match-badge no">✗ No match — even after all 9 normalization layers</span>`, 'no match')
     }
@@ -855,19 +855,20 @@ wire('btn-fuzzy', () => {
   try {
     const q = $v('fm-q')
     const cands = $v('fm-cands').split(/[,،\n]/).map(s => s.trim()).filter(Boolean)
-    const results = fuzzyMatch(q, cands)
-    if (!results.length) {
-      setResultHTML('r-fuzzy', `<div class="result-placeholder">No candidates above threshold</div>`)
+    const result = fuzzyMatch(q, cands)
+    if (!result) {
+      setResultHTML('r-fuzzy', `<div class="result-placeholder">No candidate scored above threshold 0.5</div>`)
       return
     }
     setResultHTML('r-fuzzy', `
       <div class="word-list">
-        ${results.map((w, i) => `
-          <div class="word-item">
-            <span class="word-item-n">#${i+1}</span>
-            <span class="word-item-t">${esc(w)}</span>
-          </div>`).join('')}
-      </div>`, results.join(', '))
+        <div class="word-item">
+          <span class="word-item-n">Best</span>
+          <span class="word-item-t">${esc(result.candidate)}</span>
+          <span class="word-item-n" style="font-size:10px;opacity:0.7">score: ${result.score.toFixed(2)}</span>
+        </div>
+      </div>
+      <div class="result-meta" style="margin-top:6px">Hybrid Levenshtein+LCS score out of 1.0 — threshold 0.5</div>`, result.candidate)
   } catch(e) { setError('r-fuzzy', String(e)) }
 })
 
@@ -926,7 +927,7 @@ wire('btn-tokenize', () => {
   try {
     const tokens = tokenize($v('tok-t'))
     const chips = tokens.map(tok =>
-      `<span class="token-chip ${tok.type}" title="${tok.type}: U+${(tok.value.codePointAt(0)||0).toString(16).toUpperCase()}">${esc(tok.value)}</span>`
+      `<span class="token-chip ${tok.type}" title="${tok.type}: U+${(tok.text.codePointAt(0)||0).toString(16).toUpperCase()}">${esc(tok.text)}</span>`
     ).join('')
     const counts: Record<string,number> = {}
     tokens.forEach(t => { counts[t.type] = (counts[t.type]||0)+1 })
@@ -934,7 +935,7 @@ wire('btn-tokenize', () => {
       <div class="token-chips">${chips}</div>
       <div class="result-meta" style="margin-top:8px">
         ${Object.entries(counts).map(([t,c])=>`${t}: ${c}`).join(' · ')} · total: ${tokens.length}
-      </div>`, tokens.map(t=>t.value).join(' '))
+      </div>`, tokens.map(t=>t.text).join(' '))
   } catch(e) { setError('r-tokenize', String(e)) }
 })
 
@@ -951,7 +952,7 @@ wire('btn-sentences', () => {
 
 wire('btn-ngrams', () => {
   try {
-    const toks = tokenize($v('ng-t')).filter(t=>t.type==='urdu-word').map(t=>t.value)
+    const toks = tokenize($v('ng-t')).filter(t=>t.type==='urdu-word').map(t=>t.text)
     const n = Math.max(1, parseInt($v('ng-n'))||2)
     const grams = ngrams(toks, n)
     setResultHTML('r-ngrams', `
@@ -1171,7 +1172,7 @@ wire('btn-classify', () => {
         <tbody>
           ${chars.map(c => {
             const cp = c.codePointAt(0)!
-            const cls = classifyChar(cp)
+            const cls = classifyChar(c)
             return `<tr>
               <td class="char-glyph">${esc(c)}</td>
               <td>U+${cp.toString(16).toUpperCase().padStart(4,'0')}</td>
