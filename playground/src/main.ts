@@ -204,6 +204,44 @@ const MODULES = [
   { id:'analysis',         icon:'🧬', label:'Analysis',         color:'#a855f7', count:4 },
 ]
 
+// ─── Presets (must be declared before HTML injection to avoid TDZ) ───────────
+
+const PRESETS: Record<string, { label:string; fields:Record<string,string> }[]> = {
+  'r-normalize': [
+    { label: 'Arabic Confusion', fields: { 'n-text': 'يه ملك وكتاب' } },
+    { label: 'With Diacritics',  fields: { 'n-text': 'عِلمٌ وَالعَمَلُ' } },
+    { label: 'Zero-Width',       fields: { 'n-text': 'علم\u200cہے یہ\u200dبھی' } },
+    { label: 'Honorifics',       fields: { 'n-text': 'محمدﷺ اور اللہﷻ' } },
+  ],
+  'r-fingerprint': [
+    { label: 'Same word',        fields: { 'fp-a':'عِلمٌ', 'fp-b':'عَلم' } },
+    { label: 'Arabic/Urdu ي/ی', fields: { 'fp-a':'یہ',    'fp-b':'يه' } },
+  ],
+  'r-match': [
+    { label: 'Diacritic diff',   fields: { 'm-q':'عِلمٌ',  'm-t':'علم' } },
+    { label: 'Arabic vs Urdu',   fields: { 'm-q':'يه كتاب','m-t':'یہ کتاب' } },
+    { label: 'Hamza variant',    fields: { 'm-q':'أردو',   'm-t':'اردو' } },
+  ],
+  'r-ntw': [
+    { label: '1 Lakh',     fields: { 'ntw-n':'100000' } },
+    { label: '1 Crore',    fields: { 'ntw-n':'10000000' } },
+    { label: '1 Billion',  fields: { 'ntw-n':'1000000000' } },
+    { label: '-42',        fields: { 'ntw-n':'-42' } },
+  ],
+  'r-tokenize': [
+    { label: 'Mixed nums',  fields: { 'tok-t':'پاکستان ایک خوبصورت ملک ہے، جہاں ۱۲ کروڑ لوگ رہتے ہیں۔' } },
+    { label: 'English mix', fields: { 'tok-t':'یہ AI پروجیکٹ 2024 میں شروع ہوا۔' } },
+  ],
+  'r-sort': [
+    { label: 'Alphabet', fields: { 'so-words': 'ے،ا،ک،ب،پ،ت،علم،اردو،بہترین،زبان،پاکستان' } },
+    { label: 'Cities',   fields: { 'so-words': 'لاہور،کراچی،اسلام آباد،پشاور،کوئٹہ،ملتان' } },
+  ],
+  'r-to-roman': [
+    { label: 'پاکستان', fields: { 'tr-u': 'پاکستان زندہ باد' } },
+    { label: 'Aspirated', fields: { 'tr-u': 'بھارت چھوٹا بھائی' } },
+  ],
+}
+
 // ─── HTML ─────────────────────────────────────────────────────────────────────
 
 $('app')!.innerHTML = `
@@ -278,42 +316,6 @@ document.querySelectorAll<HTMLElement>('.import-copy-btn').forEach(btn => {
 })
 
 // ── Preset chips ──
-const PRESETS: Record<string, { label:string; fields:Record<string,string> }[]> = {
-  'r-normalize': [
-    { label: 'Arabic Confusion', fields: { 'n-text': 'يه ملك وكتاب' } },
-    { label: 'With Diacritics',  fields: { 'n-text': 'عِلمٌ وَالعَمَلُ' } },
-    { label: 'Zero-Width',       fields: { 'n-text': 'علم\u200cہے یہ\u200dبھی' } },
-    { label: 'Honorifics',       fields: { 'n-text': 'محمدﷺ اور اللہﷻ' } },
-  ],
-  'r-fingerprint': [
-    { label: 'Same word',        fields: { 'fp-a':'عِلمٌ', 'fp-b':'عَلم' } },
-    { label: 'Arabic/Urdu ي/ی', fields: { 'fp-a':'یہ',    'fp-b':'يه' } },
-  ],
-  'r-match': [
-    { label: 'Diacritic diff',   fields: { 'm-q':'عِلمٌ',  'm-t':'علم' } },
-    { label: 'Arabic vs Urdu',   fields: { 'm-q':'يه كتاب','m-t':'یہ کتاب' } },
-    { label: 'Hamza variant',    fields: { 'm-q':'أردو',   'm-t':'اردو' } },
-  ],
-  'r-ntw': [
-    { label: '1 Lakh',     fields: { 'ntw-n':'100000' } },
-    { label: '1 Crore',    fields: { 'ntw-n':'10000000' } },
-    { label: '1 Billion',  fields: { 'ntw-n':'1000000000' } },
-    { label: '-42',        fields: { 'ntw-n':'-42' } },
-  ],
-  'r-tokenize': [
-    { label: 'Mixed nums',  fields: { 'tok-t':'پاکستان ایک خوبصورت ملک ہے، جہاں ۱۲ کروڑ لوگ رہتے ہیں۔' } },
-    { label: 'English mix', fields: { 'tok-t':'یہ AI پروجیکٹ 2024 میں شروع ہوا۔' } },
-  ],
-  'r-sort': [
-    { label: 'Alphabet', fields: { 'so-words': 'ے،ا،ک،ب،پ،ت،علم،اردو،بہترین،زبان،پاکستان' } },
-    { label: 'Cities',   fields: { 'so-words': 'لاہور،کراچی،اسلام آباد،پشاور،کوئٹہ،ملتان' } },
-  ],
-  'r-to-roman': [
-    { label: 'پاکستان', fields: { 'tr-u': 'پاکستان زندہ باد' } },
-    { label: 'Aspirated', fields: { 'tr-u': 'بھارت چھوٹا بھائی' } },
-  ],
-}
-
 document.querySelectorAll<HTMLElement>('.preset-chip').forEach(chip => {
   const key = chip.dataset.preset!
   const [rid, idx] = key.split(/-(\d+)$/)
