@@ -15,5 +15,13 @@ export default defineConfig({
     },
   },
   esbuild: { target: 'es2022' },
-  build: { outDir: 'dist' },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        docs: path.resolve(__dirname, 'docs/index.html'),
+      },
+    },
+  },
 })
