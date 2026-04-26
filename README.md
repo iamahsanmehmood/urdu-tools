@@ -683,7 +683,7 @@ Motivated the decision to bind multi-word compounds *before* tokenization rather
 
 ---
 
-*Papers available on request — contact the author via GitHub.*
+*Search by title on [Google Scholar](https://scholar.google.com) or [ResearchGate](https://www.researchgate.net) to access these works through your institution or the authors' public profiles.*
 
 ---
 
