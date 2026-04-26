@@ -683,7 +683,7 @@ Motivated the decision to bind multi-word compounds *before* tokenization rather
 
 ---
 
-*All three papers are archived in the `New/` directory of this repository for reference.*
+*Papers available on request — contact the author via GitHub.*
 
 ---
 
@@ -713,16 +713,9 @@ MIT. See [LICENSE](LICENSE).
 
 <div align="center">
 
-<img src="https://avatars.githubusercontent.com/u/108397884?v=4" width="100" height="100" style="border-radius: 50%;" alt="Ahsan Mehmood"/>
+<img src="https://avatars.githubusercontent.com/u/108397884?v=4" width="96" height="96" style="border-radius: 50%;" alt="Ahsan Mehmood"/>
 
 ### Ahsan Mehmood
-
-**Co-Founder & CEO at [XechTech](https://xechtech.com) · Full-Stack Developer · Technical Founder**
-
-*Islamabad, Pakistan*
-
-Built out of real production pain across four Urdu software projects.  
-Five years shipping products in .NET, Flutter, React, TypeScript, and AI/LLM stacks.
 
 [![GitHub](https://img.shields.io/badge/GitHub-iamahsanmehmood-181717?style=flat-square&logo=github)](https://github.com/iamahsanmehmood)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/iamahsanmehmood)

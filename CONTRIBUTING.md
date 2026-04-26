@@ -34,10 +34,10 @@ pnpm install
 
 ```bash
 # JavaScript
-pnpm --filter @urdu-tools/core test
+pnpm --filter @iamahsanmehmood/urdu-tools test
 
 # JavaScript with coverage
-pnpm --filter @urdu-tools/core test:coverage
+pnpm --filter @iamahsanmehmood/urdu-tools test:coverage
 
 # .NET
 dotnet test packages/urdu-dotnet/UrduTools.Core.Tests/UrduTools.Core.Tests.csproj
@@ -49,7 +49,7 @@ pnpm test && dotnet test packages/urdu-dotnet/UrduTools.Core.Tests/UrduTools.Cor
 ### Build
 
 ```bash
-pnpm --filter @urdu-tools/core build
+pnpm --filter @iamahsanmehmood/urdu-tools build
 dotnet build packages/urdu-dotnet/UrduTools.Core/UrduTools.Core.csproj
 ```
 
@@ -60,7 +60,7 @@ dotnet build packages/urdu-dotnet/UrduTools.Core/UrduTools.Core.csproj
 ```
 urdu-tools/
 ├── packages/
-│   ├── urdu-js/              # @urdu-tools/core TypeScript package
+│   ├── urdu-js/              # @iamahsanmehmood/urdu-tools TypeScript package
 │   │   ├── src/
 │   │   │   ├── normalization/   # 12-layer normalization pipeline
 │   │   │   ├── analysis/        # Script detection, char classification
@@ -219,6 +219,29 @@ Please open a GitHub issue with:
 4. **Context** — where the text came from (keyboard, TinyMCE, Word, database, etc.)
 
 The source of the text matters — characters from different sources can look identical but have different code points.
+
+---
+
+## Adding compound words to the lexicon
+
+The compound lexicon (`packages/urdu-js/src/compound/lexicon-data.ts`) is the single most impactful area for community contributions. Every new entry improves detection for all users.
+
+**What to add:**
+- Echo compounds (ردیف): `رنگ برنگ`, `دال دلیا`, `پانی وانی`
+- Synonym pairs: `محنت مشقت`, `علم ہنر`, `صبر شکر`
+- Fixed collocations: `خوش قسمت`, `بدقسمت`, `سرخ و سفید`
+- Multi-word titles or idioms: `درد دل`, `شب و روز`, `زندگی موت`
+
+**Format:** Open `lexicon-data.ts`, find the alphabetically correct position, and add:
+```typescript
+['rootWord', new Set(['tail1', 'tail2', 'multiWord tail'])],
+```
+
+**Rules:**
+- Root is the *first* word of the compound
+- Tail is everything *after* the first word (can be multiple words: `'آف اسلام'`)
+- Only add verified Urdu compounds — not translation guesses
+- Add a test in `tests/compound/detect-lexicon.test.ts`
 
 ---
 
