@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] – 2026-04-26
+
+### Added
+
+**@iamahsanmehmood/urdu-tools (TypeScript)**
+
+- **Compound word detection module** — new `@iamahsanmehmood/urdu-tools/compound` sub-package:
+  - `detectCompounds(text, options?)` — greedy longest-match N-gram scanner detecting compound words of arbitrary length using three independent layers
+  - `joinCompounds(text, options?)` — joins detected compound components with a configurable binder character (default: ZWNJ U+200C)
+  - `splitCompounds(text)` — inverse of `joinCompounds`; replaces ZWNJ/NBSP/WJ binders back to regular spaces
+  - `isCompound(w1, w2, options?)` — pair-check API returning `{ matched, type }` for a specific word pair
+  - **Layer 1 — Affix (UAWL):** directional matching against 100+ known Urdu prefix/suffix morphemes (خانہ، گاہ، پرست، بے، نا، خوش، شب، غم…)
+  - **Layer 2 — Izafat:** detects zer (◌ِ), hamza-above (◌ٔ), and vav-e-atf (و) markers
+  - **Layer 3 — Lexicon:** 3,262-root curated compound dictionary built from 5,300+ verified entries; supports N-word tails (not just bigrams)
+  - Greedy longest-match guarantees that `انسائیکلوپیڈیا آف اسلام` wins over any shorter 2-word overlap
+  - Span chaining merges overlapping detections into larger compounds (e.g., `امورِ خانہ` + `خانہ داری` → `امورِ خانہ داری`)
+  - Configurable binder: `'zwnj'` (default) · `'nbsp'` · `'wj'`
+  - TypeScript types exported: `CompoundSpan`, `CompoundMatch`, `CompoundOptions`, `CompoundType`
+  - Constants exported: `COMPOUND_LEXICON` (Map), `AFFIX_SET`, `PREFIX_SET`, `SUFFIX_SET`
+- **Playground UI** — "Join Compounds Before Tokenizing" checkbox added to Tokenization module
+
+### Changed
+
+**@iamahsanmehmood/urdu-tools (TypeScript)**
+
+- `toUrduNumerals()` now accepts `string` in addition to `number | bigint` — enables processing of mixed alphanumeric form input without explicit casting
+- `sort()` dropped the boolean `reverse` argument for performance; use native `.reverse()` chaining instead: `sort(arr).reverse()`
+
+### Fixed
+
+**@iamahsanmehmood/urdu-tools (TypeScript)**
+
+- Fixed `normalizeNumerals()` call signature in playground (now explicitly passes target encoding `'ascii'`)
+- Fixed `wordsToNumber()` null-return handling in playground
+- Fixed `classifyChar()` codepoint parsing in playground UI renderer
+
+### Notes
+
+- **Compound detection is TypeScript/JavaScript only** in this release. The `UrduTools.Core` (.NET) package is version-synced to 1.1.0 with no code changes; compound detection for .NET is planned for a future release.
+- 392 tests passing (up from 284) across 38 test files; compound module has 99.86% statement coverage.
+
+---
+
 ## [1.0.0] – 2025-04-12
 
 ### Added

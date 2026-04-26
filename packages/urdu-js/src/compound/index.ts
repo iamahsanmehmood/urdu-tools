@@ -1,0 +1,5 @@
+export type { CompoundSpan, CompoundMatch, CompoundOptions, CompoundType } from './compound-types.js'
+export { detectCompounds } from './detect.js'
+export { joinCompounds, splitCompounds, isCompound } from './join-split.js'
+export { AFFIX_SET, PREFIX_SET, SUFFIX_SET } from './affix-data.js'
+export { COMPOUND_LEXICON } from './lexicon-data.js'

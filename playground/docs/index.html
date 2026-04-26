@@ -219,6 +219,7 @@ code[class*="language-"]{font-family:var(--font-code)!important;font-size:12px!i
   <a class="mnav-item" href="#search">🔍 Search</a>
   <a class="mnav-item" href="#numbers">🔢 Numbers</a>
   <a class="mnav-item" href="#tokenization">✂️ Tokenize</a>
+  <a class="mnav-item" href="#compound">🔗 Compound</a>
   <a class="mnav-item" href="#string-utils">📝 String Utils</a>
   <a class="mnav-item" href="#encoding">💾 Encoding</a>
   <a class="mnav-item" href="#sorting">🔤 Sorting</a>
@@ -250,6 +251,9 @@ code[class*="language-"]{font-family:var(--font-code)!important;font-size:12px!i
     </a>
     <a class="nav-item" href="#tokenization" onclick="setActive(this)">
       <span class="nav-icon" style="background:rgba(34,197,94,.15);color:var(--green)">✂️</span>Tokenization
+    </a>
+    <a class="nav-item" href="#compound" onclick="setActive(this)">
+      <span class="nav-icon" style="background:rgba(20,184,166,.15);color:var(--teal)">🔗</span>Compound Words
     </a>
     <a class="nav-item" href="#string-utils" onclick="setActive(this)">
       <span class="nav-icon" style="background:rgba(20,184,166,.15);color:var(--teal)">📝</span>String Utilities
@@ -909,6 +913,190 @@ const parsed = raw.replace(/\\x([0-9a-fA-F]{2})/g,
 const unicode = convertWindows1256ToUnicode(parsed)</code></pre>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Compound Words -->
+<section id="compound">
+  <div class="sec-head">
+    <div class="sec-icon" style="background:rgba(20,184,166,.15);color:var(--teal)">🔗</div>
+    <div>
+      <div class="sec-title">Compound Words</div>
+      <div class="sec-sub">Detect, join, split, and classify Urdu compound words with affix, izafat, and lexicon layers</div>
+    </div>
+    <span class="sec-badge" style="background:rgba(20,184,166,.12);color:var(--teal);border:1px solid rgba(20,184,166,.2)">4 functions</span>
+  </div>
+
+  <div class="callout callout-info" style="margin-bottom:20px">
+    <strong>Three detection layers:</strong>
+    <strong>affix</strong> — 100+ UAWL affixes (خانہ، گاہ، پرست، بے، نا، غیر…);
+    <strong>izafat</strong> — zer (◌ِ), hamza-above (◌ٔ), and vav-e-atf (و);
+    <strong>lexicon</strong> — 3,262-entry curated dictionary (echo compounds, synonym pairs, fixed expressions).
+    A greedy <strong>longest-match N-gram</strong> algorithm scans left-to-right, preferring the longest valid compound at each position.
+  </div>
+
+  <div class="fn-block">
+    <div class="fn-head">
+      <div><div class="fn-name">detectCompounds</div><span class="fn-badge" style="background:rgba(20,184,166,.15);color:var(--teal)">N-gram · greedy</span></div>
+      <div class="fn-sig">detectCompounds(text: string, options?: CompoundOptions): CompoundSpan[]
+
+interface CompoundSpan {
+  text: string        // matched compound as it appears in the input
+  type: CompoundType  // 'affix' | 'izafat' | 'lexicon'
+  components: string[] // individual words that form the compound
+  start: number       // word index of first component
+  end: number         // word index of last component (inclusive)
+}
+
+interface CompoundOptions {
+  layers?: Array&lt;'affix' | 'izafat' | 'lexicon'&gt; // default: all three
+  binder?: 'zwnj' | 'nbsp' | 'wj'                 // default: 'zwnj'
+  minScore?: number
+}</div>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">
+        Scans <em>text</em> and returns every compound word span found. Uses a greedy longest-match pass over word N-grams so that a 3-word compound like <code>امورِ خانہ داری</code> is returned as a single span rather than two overlapping 2-word spans.
+        <br><br>
+        <strong>Detection layers</strong> run in priority order: <code>affix</code> first (morphological), then <code>izafat</code> (syntactic connectors), then <code>lexicon</code> (dictionary lookup). Disable individual layers via <code>options.layers</code>.
+      </div>
+      <div class="code-wrap">
+        <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
+<pre class="language-typescript"><code class="language-typescript">import { detectCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+
+// Affix-based compound (خانہ suffix):
+detectCompounds('کتاب خانہ بہت اچھا ہے')
+// → [{ text: 'کتاب خانہ', type: 'affix',
+//      components: ['کتاب', 'خانہ'], start: 0, end: 1 }]
+
+// Izafat via vav-e-atf:
+detectCompounds('علم و عمل ضروری ہے')
+// → [{ text: 'علم و عمل', type: 'izafat',
+//      components: ['علم', 'و', 'عمل'], start: 0, end: 2 }]
+
+// Greedy N-gram: 3-word compound wins over two 2-word spans:
+detectCompounds('امورِ خانہ داری')
+// → [{ text: 'امورِ خانہ داری', type: 'affix',
+//      components: ['امورِ', 'خانہ', 'داری'], start: 0, end: 2 }]
+
+// Lexicon compound (echo/fixed expression):
+detectCompounds('ہاتھ پاؤں پھیلانا')
+// → [{ text: 'ہاتھ پاؤں', type: 'lexicon',
+//      components: ['ہاتھ', 'پاؤں'], start: 0, end: 1 }]
+
+// Affix layer only:
+detectCompounds('کتاب خانہ اور علم و عمل', { layers: ['affix'] })
+// → [{ text: 'کتاب خانہ', type: 'affix', ... }]  // izafat skipped</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-block">
+    <div class="fn-head">
+      <div><div class="fn-name">joinCompounds</div><span class="fn-badge" style="background:rgba(20,184,166,.15);color:var(--teal)">ZWNJ binder</span></div>
+      <div class="fn-sig">joinCompounds(text: string, options?: CompoundOptions): string</div>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">
+        Detects compounds in <em>text</em> and <strong>replaces the space between components with a binder character</strong>. The default binder is <code>ZWNJ</code> (U+200C), which signals compound membership to renderers without inserting a visible space. Other binders: <code>'nbsp'</code> (U+00A0) or <code>'wj'</code> (U+2060 Word Joiner).
+        <br><br>
+        Only the spaces <em>between</em> compound components are replaced; non-compound spaces in the text are left untouched.
+      </div>
+      <div class="code-wrap">
+        <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
+<pre class="language-typescript"><code class="language-typescript">import { joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+
+// Default binder: ZWNJ (U+200C) — invisible but meaningful
+joinCompounds('کتاب خانہ اچھا ہے')
+// → 'کتاب‌خانہ اچھا ہے'   (ZWNJ between کتاب and خانہ)
+
+// NBSP binder: non-breaking space (U+00A0)
+joinCompounds('کتاب خانہ اچھا ہے', { binder: 'nbsp' })
+// → 'کتاب\u00A0خانہ اچھا ہے'
+
+// Word Joiner binder (U+2060)
+joinCompounds('کتاب خانہ اچھا ہے', { binder: 'wj' })
+// → 'کتاب\u2060خانہ اچھا ہے'
+
+// Multiple compounds in one string:
+joinCompounds('کتاب خانہ میں آب و ہوا اچھی ہے')
+// → 'کتاب‌خانہ میں آب‌و‌ہوا اچھی ہے'</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-block">
+    <div class="fn-head">
+      <div><div class="fn-name">splitCompounds</div></div>
+      <div class="fn-sig">splitCompounds(text: string): string</div>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">
+        The inverse of <code>joinCompounds</code>. Replaces all binder characters (ZWNJ U+200C, NBSP U+00A0, Word Joiner U+2060) between Urdu words with a plain space, effectively separating joined compound components back into space-delimited tokens.
+      </div>
+      <div class="code-wrap">
+        <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
+<pre class="language-typescript"><code class="language-typescript">import { splitCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+
+splitCompounds('کتاب‌خانہ')
+// → 'کتاب خانہ'   (ZWNJ → space)
+
+splitCompounds('آب\u00A0و\u00A0ہوا')
+// → 'آب و ہوا'    (NBSP → space)
+
+// Round-trip:
+const joined = joinCompounds('کتاب خانہ بہت اچھا ہے')
+splitCompounds(joined)
+// → 'کتاب خانہ بہت اچھا ہے'  (original restored)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-block">
+    <div class="fn-head">
+      <div><div class="fn-name">isCompound</div><span class="fn-badge" style="background:rgba(20,184,166,.15);color:var(--teal)">Pair check</span></div>
+      <div class="fn-sig">isCompound(w1: string, w2: string, options?: CompoundOptions): CompoundMatch
+
+interface CompoundMatch {
+  matched: boolean
+  type: CompoundType | null  // 'affix' | 'izafat' | 'lexicon' | null
+}</div>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">
+        Tests whether two adjacent words form a compound. Runs all enabled detection layers against the pair and returns the <strong>first matching layer</strong> (in priority order: affix → izafat → lexicon). If no layer matches, returns <code>{ matched: false, type: null }</code>.
+        <br><br>
+        Useful for building custom compound-aware tokenizers or for validating individual word pairs without scanning a full string.
+      </div>
+      <div class="code-wrap">
+        <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
+<pre class="language-typescript"><code class="language-typescript">import { isCompound } from '@iamahsanmehmood/urdu-tools/compound'
+
+isCompound('کتاب', 'خانہ')
+// → { matched: true, type: 'affix' }
+
+isCompound('علم', 'و')
+// → { matched: true, type: 'izafat' }
+
+isCompound('اچھا', 'آدمی')
+// → { matched: false, type: null }
+
+// Check only the lexicon layer:
+isCompound('ہاتھ', 'پاؤں', { layers: ['lexicon'] })
+// → { matched: true, type: 'lexicon' }
+
+isCompound('کتاب', 'خانہ', { layers: ['lexicon'] })
+// → { matched: false, type: null }  // affix match excluded</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top:4px">
+    <strong>Exported constants:</strong>
+    <code>COMPOUND_LEXICON</code> — <code>Map&lt;string, CompoundType&gt;</code> with 3,262 curated entries (echo compounds, synonym pairs, fixed expressions).
+    <code>AFFIX_SET</code> — Set of all recognized affixes.
+    <code>PREFIX_SET</code> / <code>SUFFIX_SET</code> — Partitioned prefix and suffix sets from UAWL.
+    Import: <code>import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from '@iamahsanmehmood/urdu-tools/compound'</code>
   </div>
 </section>
 

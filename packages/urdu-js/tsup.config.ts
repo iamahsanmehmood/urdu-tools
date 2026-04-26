@@ -11,6 +11,7 @@ export default defineConfig({
     'encoding/index': 'src/encoding/index.ts',
     'sorting/index': 'src/sorting/index.ts',
     'transliteration/index': 'src/transliteration/index.ts',
+    'compound/index': 'src/compound/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

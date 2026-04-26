@@ -9,7 +9,7 @@ export function normalizeNumerals(text: string, target: NumeralTarget): string {
   })
 }
 
-export function toUrduNumerals(n: number | bigint): string {
+export function toUrduNumerals(n: number | bigint | string): string {
   return String(n).replace(/[0-9]/g, d => String.fromCodePoint(0x06f0 + Number(d)))
 }
 

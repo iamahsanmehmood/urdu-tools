@@ -1,6 +1,6 @@
 {
   "name": "@iamahsanmehmood/urdu-tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "exports": {
     ".": { "import": "./dist/index.js", "require": "./dist/index.cjs", "types": "./dist/index.d.ts" },
@@ -12,7 +12,8 @@
     "./string-utils": { "import": "./dist/string-utils/index.js", "require": "./dist/string-utils/index.cjs", "types": "./dist/string-utils/index.d.ts" },
     "./encoding": { "import": "./dist/encoding/index.js", "require": "./dist/encoding/index.cjs", "types": "./dist/encoding/index.d.ts" },
     "./sorting": { "import": "./dist/sorting/index.js", "require": "./dist/sorting/index.cjs", "types": "./dist/sorting/index.d.ts" },
-    "./transliteration": { "import": "./dist/transliteration/index.js", "require": "./dist/transliteration/index.cjs", "types": "./dist/transliteration/index.d.ts" }
+    "./transliteration": { "import": "./dist/transliteration/index.js", "require": "./dist/transliteration/index.cjs", "types": "./dist/transliteration/index.d.ts" },
+    "./compound": { "import": "./dist/compound/index.js", "require": "./dist/compound/index.cjs", "types": "./dist/compound/index.d.ts" }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

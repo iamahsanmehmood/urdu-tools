@@ -7,16 +7,21 @@
 # urdu-tools
 
 > Production-quality Urdu text processing — TypeScript and C#/.NET, zero dependencies.
+> **v1.1.0** — Compound word detection module with 3,262-entry lexicon and N-gram scanning.
 
 [![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
 [![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc)](https://iamahsanmehmood.github.io/urdu-tools/)
+[![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
 [![npm](https://img.shields.io/badge/npm-GitHub%20Packages-blue)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
 [![NuGet](https://img.shields.io/badge/nuget-GitHub%20Packages-blue)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > **[▶ Try it live in your browser →](https://iamahsanmehmood.github.io/urdu-tools/)**  
 > Interactive playground — test every function with real Urdu text, no install needed.
+>
+> **[📖 Full API Documentation →](https://iamahsanmehmood.github.io/urdu-tools/docs/)**  
+> Complete reference with code examples for all 35+ functions across 10 modules.
 
 Urdu is technically one of the most demanding languages to process correctly in software. Characters from the Arabic block overlap with Urdu code points, invisible zero-width joiners silently break string equality, diacritical marks cause identical-looking words to fail lookups, and the South Asian numbering system exceeds JavaScript's safe integer range. This library was built from real production bugs across four different Urdu software projects and handles all of them.
 
@@ -26,8 +31,10 @@ Urdu is technically one of the most demanding languages to process correctly in 
 
 | Package | Language | Install |
 |---------|----------|---------|
-| [`@urdu-tools/core`](packages/urdu-js) | TypeScript / JavaScript | `npm install @urdu-tools/core` |
+| [`@iamahsanmehmood/urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install @iamahsanmehmood/urdu-tools` |
 | [`UrduTools.Core`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package UrduTools.Core` |
+
+> **Package registry:** GitHub Packages. See the [packages page](https://github.com/iamahsanmehmood/urdu-tools/packages) for authentication instructions.
 
 Both packages have **zero runtime dependencies** and identical APIs.
 
@@ -42,6 +49,7 @@ Both packages have **zero runtime dependencies** and identical APIs.
   - [Search & Matching](#search--matching)
   - [Numbers](#numbers)
   - [Tokenization](#tokenization)
+  - [Compound Words](#compound-words)
   - [String Utilities](#string-utilities)
   - [Encoding](#encoding-js-only)
   - [Sorting](#sorting)
@@ -73,11 +81,12 @@ This library fixes all of these at the API boundary.
 ### JavaScript / TypeScript
 
 ```bash
-npm install @urdu-tools/core
+npm install @iamahsanmehmood/urdu-tools
 ```
 
 ```typescript
-import { normalize, match, numberToWords, sort, toRoman, fingerprint, decodeHtmlEntities } from '@urdu-tools/core'
+import { normalize, match, numberToWords, sort, toRoman, fingerprint, decodeHtmlEntities } from '@iamahsanmehmood/urdu-tools'
+import { detectCompounds, joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
 
 // Normalize before storage or search
 normalize('عِلمٌ')                    // → 'علم'  (strips diacritics)
@@ -103,6 +112,13 @@ fingerprint('عِلمٌ') === fingerprint('عَلم')  // → true
 
 // Decode HTML entities before normalization (for TinyMCE/Quill output)
 decodeHtmlEntities('کتاب&rsquo;خانہ')  // → 'کتاب\u2019خانہ'
+
+// Compound word detection (v1.1.0)
+detectCompounds('کتاب خانہ بہت اچھا ہے')
+// → [{ text: 'کتاب خانہ', type: 'affix', components: ['کتاب','خانہ'], start: 0, end: 1 }]
+
+joinCompounds('کتاب خانہ اچھی جگہ ہے')
+// → 'کتاب‌خانہ اچھی جگہ ہے'  (ZWNJ binds compound for downstream tokenizer)
 ```
 
 ### C# / .NET
@@ -151,7 +167,7 @@ The normalization pipeline applies up to 12 layers in a deterministic order. All
 import { normalize, stripDiacritics, normalizeAlif,
          normalizeHamza, normalizeCharacters, fingerprint,
          stripZeroWidth, normalizeNumerals, removeKashida,
-         normalizePresentationForms } from '@urdu-tools/core'
+         normalizePresentationForms } from '@iamahsanmehmood/urdu-tools'
 ```
 
 **Pipeline layers:**
@@ -191,7 +207,7 @@ fingerprint('علم\u200c') === fingerprint('علم') // true (ZWNJ stripped)
 ### Search & Matching
 
 ```typescript
-import { match, fuzzyMatch, getAllNormalizations } from '@urdu-tools/core'
+import { match, fuzzyMatch, getAllNormalizations } from '@iamahsanmehmood/urdu-tools'
 ```
 
 **`match(query, target)`** — tries 9 progressively aggressive normalization layers until a match is found:
@@ -236,7 +252,7 @@ fuzzyMatch('کتاب', ['کتابیں', 'کتب'])
 Uses **bigint** throughout — South Asian numbers exceed `Number.MAX_SAFE_INTEGER` (پانچ نیل = 5×10¹⁵).
 
 ```typescript
-import { numberToWords, formatCurrency, toUrduNumerals, wordsToNumber } from '@urdu-tools/core'
+import { numberToWords, formatCurrency, toUrduNumerals, wordsToNumber } from '@iamahsanmehmood/urdu-tools'
 
 numberToWords(0n)                                     // 'صفر'
 numberToWords(100n)                                   // 'ایک سو'
@@ -283,7 +299,7 @@ wordsToNumber('پانچ سو پانچ')   // 505n
 ### Tokenization
 
 ```typescript
-import { tokenize, sentences, ngrams } from '@urdu-tools/core'
+import { tokenize, sentences, ngrams } from '@iamahsanmehmood/urdu-tools'
 
 tokenize('پاکستان ایک خوبصورت ملک ہے')
 // → [
@@ -308,11 +324,94 @@ ngrams(tokens, 2)
 
 ---
 
+### Compound Words
+
+Detects and normalizes Urdu compound words (مرکب الفاظ) using three independent layers: **UAWL affix matching**, **izafat marker detection**, and a **3,262-entry curated lexicon** with greedy longest-match N-gram scanning.
+
+```typescript
+import { detectCompounds, joinCompounds, splitCompounds, isCompound } from '@iamahsanmehmood/urdu-tools/compound'
+
+// Detect compound word spans — affix layer
+detectCompounds('کتاب خانہ بہت اچھا ہے')
+// → [{ text: 'کتاب خانہ', type: 'affix', components: ['کتاب', 'خانہ'], start: 0, end: 1 }]
+
+// Izafat layer (vav-e-atf)
+detectCompounds('علم و عمل ضروری ہے')
+// → [{ text: 'علم و عمل', type: 'izafat', components: ['علم', 'و', 'عمل'], start: 0, end: 2 }]
+
+// Lexicon layer — echo compound
+detectCompounds('رنگ برنگے پھول')
+// → [{ text: 'رنگ برنگے', type: 'lexicon', components: ['رنگ', 'برنگے'], start: 0, end: 1 }]
+
+// N-gram: 3-word compound — chained affix + izafat spans
+detectCompounds('امورِ خانہ داری چلانا')
+// → [{ text: 'امورِ خانہ داری', type: 'affix', components: ['امورِ','خانہ','داری'], start: 0, end: 2 }]
+
+// Join compounds with binder character (default: ZWNJ U+200C)
+joinCompounds('کتاب خانہ اچھا ہے')
+// → 'کتاب‌خانہ اچھا ہے'  (ZWNJ between components; tokenizer treats as one token)
+
+joinCompounds('بے عزت آدمی', { binder: 'nbsp' })
+// → 'بے\u00A0عزت آدمی'
+
+// Split compounds back to regular spaces (inverse of joinCompounds)
+splitCompounds('کتاب‌خانہ')   // → 'کتاب خانہ'
+
+// Check a specific word pair
+isCompound('کتاب', 'خانہ')    // → { matched: true, type: 'affix' }
+isCompound('محنت', 'مشقت')    // → { matched: true, type: 'lexicon' }
+isCompound('اچھا', 'آدمی')    // → { matched: false, type: null }
+
+// Disable individual layers
+detectCompounds(text, { affix: false, izafat: true, lexicon: true })
+```
+
+**Detection layers:**
+
+| Layer | Option | Default | What it detects |
+|-------|--------|---------|----------------|
+| 1 | `affix` | ✅ | UAWL affix-based (100+ affixes): خانہ، گاہ، پرست، بے، نا، خوش، شب، غم… |
+| 2 | `izafat` | ✅ | Izafat markers: zer (◌ِ), hamza-above (◌ٔ), vav-e-atf (و) |
+| 3 | `lexicon` | ✅ | 3,262-root curated dictionary — echo words, synonym pairs, fixed collocations |
+
+**Algorithm:** Greedy longest-match N-gram forward scan. When the engine finds a matching root in the lexicon, it tries all known tails sorted by length (longest first). A 3-word match always beats a 2-word overlap. Overlapping affix + izafat spans are chained into a single larger compound.
+
+**Compound types returned:**
+
+| Type | Example | Explanation |
+|------|---------|-------------|
+| `affix` | کتاب خانہ | Either word matches a known affix (خانہ = place suffix) |
+| `izafat` | کتابِ حسنہ | Word ends with zer (kasra) or hamza-above |
+| `izafat` | علم و عمل | Standalone و between two Urdu content words |
+| `lexicon` | محنت مشقت | Curated compound — synonym pair, echo word, fixed expression |
+
+**Binder characters:**
+
+| Binder | Character | Use case |
+|--------|-----------|----------|
+| `'zwnj'` | U+200C (default) | Zero-width, no visual change, prevents downstream tokenizer splitting |
+| `'nbsp'` | U+00A0 | Non-breaking space, visible space preserved |
+| `'wj'` | U+2060 | Word Joiner, zero-width, never line-breaks |
+
+**Compound-aware tokenization pipeline:**
+
+```typescript
+import { joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+import { tokenize } from '@iamahsanmehmood/urdu-tools'
+
+// Without compound joining: "کتاب خانہ" → two tokens
+// With compound joining:    "کتاب‌خانہ" → one semantic token
+const joined = joinCompounds(text)   // step 1: bind compounds
+const tokens = tokenize(joined)      // step 2: tokenize
+```
+
+---
+
 ### String Utilities
 
 ```typescript
 import { reverse, truncate, wordCount, charCount,
-         extractUrdu, decodeHtmlEntities } from '@urdu-tools/core'
+         extractUrdu, decodeHtmlEntities } from '@iamahsanmehmood/urdu-tools'
 
 // Reverse word order (not characters — preserves RTL Arabic shaping)
 reverse('پاکستان ہندوستان')     // 'ہندوستان پاکستان'
@@ -344,7 +443,7 @@ decodeHtmlEntities('علم&nbsp;ہے')      // 'علم\u00A0ہے'
 Handles InPage — the dominant pre-Unicode Urdu desktop publishing tool — and legacy Windows-1256 encoded data.
 
 ```typescript
-import { decodeInpage, detectEncoding, convertWindows1256ToUnicode } from '@urdu-tools/core'
+import { decodeInpage, detectEncoding, convertWindows1256ToUnicode } from '@iamahsanmehmood/urdu-tools'
 
 // Decode an InPage .inp file buffer
 const result = decodeInpage(buffer, 'auto')
@@ -371,7 +470,7 @@ convertWindows1256ToUnicode(win1256Buffer)
 Canonical 39-letter Urdu alphabet order: ء ا ب پ ت ٹ ث ج چ ح خ د ڈ ذ ر ڑ ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن ں و ہ ھ ی ے
 
 ```typescript
-import { sort, compare, sortKey } from '@urdu-tools/core'
+import { sort, compare, sortKey } from '@iamahsanmehmood/urdu-tools'
 
 sort(['ے', 'ا', 'ک', 'ب'])
 // → ['ا', 'ب', 'ک', 'ے']
@@ -394,7 +493,7 @@ Diacritics are stripped before sort key generation — `عِلم` and `عَلم`
 Best-effort Urdu ↔ Roman conversion. The FSM uses digraph priority so `بھ` → `bh` (not `b` + `h`).
 
 ```typescript
-import { toRoman, fromRoman } from '@urdu-tools/core'
+import { toRoman, fromRoman } from '@iamahsanmehmood/urdu-tools'
 
 toRoman('پاکستان')     // 'pakistan'
 toRoman('بھارت')       // 'bharat'
@@ -415,7 +514,7 @@ fromRoman('bharat')    // 'بھارت'
 ### Analysis
 
 ```typescript
-import { isUrduChar, getScript, classifyChar, isRTL, getUrduDensity } from '@urdu-tools/core'
+import { isUrduChar, getScript, classifyChar, isRTL, getUrduDensity } from '@iamahsanmehmood/urdu-tools'
 
 isUrduChar('پ')     // true  (U+067E — Urdu-specific)
 isUrduChar('ب')     // false (U+0628 — shared with Arabic)

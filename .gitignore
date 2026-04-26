@@ -11,3 +11,8 @@ obj/
 .vs/
 TestResults/
 .claude/
+
+# Research / build-time scratch files
+New/
+playground/compounds_clean.json
+playground/compounds_extracted.txt
