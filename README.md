@@ -625,16 +625,16 @@ getUrduDensity('پاکستان زندہ') // 0.28
 
 ## Why this exists
 
-Across multiple production Urdu projects, the same bugs kept appearing:
+This library was born directly from building [HamaariUrdu](https://hamaariurdu.com) — an Urdu language platform where getting text processing right is not optional. As development progressed, the same class of failures kept surfacing with no off-the-shelf solution:
 
-- Searching for **بھارت** returns zero results because the database stored it with Arabic `ه` (U+0647) but the user typed Urdu `ھ` (U+06BE) — visually identical in most fonts.
-- A word copied from Microsoft Word contains an invisible **ZWNJ** (U+200C). The string `"قلم"` looks identical to `"قلم"` but `===` returns false.
-- TinyMCE silently converts the **Izafat apostrophe** (U+2019) to `&rsquo;`, breaking every compound word lookup.
-- `numberToWords(10_000_000_000_000)` overflows `Number.MAX_SAFE_INTEGER`.
-- Sorting an Urdu word list alphabetically gives wrong results because databases don't have native Urdu collation.
-- A named entity like `امورِ خانہ داری` is split into 3 tokens that carry no individual meaning.
+- **Search returning zero results** — the database stored `ہے` with Urdu `ہ` (U+06C1), but a user's keyboard typed Arabic `ه` (U+0647). Both look identical on screen. No existing library handled this mapping consistently.
+- **String equality silently failing** — a word copied from Microsoft Word contains an invisible ZWNJ (U+200C). `"قلم" === "قلم"` returns false. No warning, no error — just zero matches.
+- **TinyMCE destroying Izafat** — the editor silently converts the Izafat apostrophe (U+2019) to `&rsquo;` before saving. Every compound word lookup in the database then fails because the stored form and the searched form no longer match.
+- **Numbers overflowing** — Urdu text frequently references لاکھ, کروڑ, ارب figures. These exceed `Number.MAX_SAFE_INTEGER`. JavaScript's native number type loses precision silently.
+- **Sorting broken by default** — no database or JavaScript runtime has native Urdu collation. Word lists sorted "alphabetically" come out in the wrong order for Urdu readers.
+- **Compound words destroying NLP** — `کتاب خانہ` (library), `خوش قسمت` (fortunate), `امورِ خانہ داری` (household affairs) are each one semantic unit. Every tokenizer split them into meaningless pieces, breaking search, NER, and word count.
 
-This library fixes all of these at the API boundary. Built from real production bugs across four different Urdu software projects.
+None of these had satisfactory solutions in any existing Urdu library. urdu-tools was built to fix them at the API boundary. HamaariUrdu now runs entirely on it — and the same fixes benefited [PAL](https://pal.gov.pk) and [DLP](https://dlp.gov.pk) when they integrated the library for their Urdu text search and archiving systems.
 
 ---
 
