@@ -72,6 +72,16 @@ This is the first open-source implementation of deterministic, multi-layer, N-gr
 
 ---
 
+## Used in production
+
+| Project | Type | Uses |
+|---------|------|------|
+| [HamaariUrdu](https://hamaariurdu.com) | Urdu language learning platform | Normalization, fingerprint, tokenization, search matching, numbers, compound detection |
+| [Pakistan Academy of Letters](https://pal.gov.pk) | Government literary institution | Normalization, search, sorting |
+| [Digital Library of PAL](https://dlp.gov.pk) | Government digital Urdu archive | Normalization, search, encoding |
+
+---
+
 ## 🔥 The Problem with Urdu Compounds
 
 This is the deepest unsolved problem in practical Urdu NLP, and **every tokenizer gets it wrong**.
