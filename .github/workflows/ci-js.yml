@@ -3,14 +3,8 @@ name: CI — JS
 on:
   push:
     branches: [main]
-    paths:
-      - 'packages/urdu-js/**'
-      - '.github/workflows/ci-js.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'packages/urdu-js/**'
-      - '.github/workflows/ci-js.yml'
 
 jobs:
   test:

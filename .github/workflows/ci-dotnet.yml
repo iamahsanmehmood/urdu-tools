@@ -3,14 +3,8 @@ name: CI — .NET
 on:
   push:
     branches: [main]
-    paths:
-      - 'packages/urdu-dotnet/**'
-      - '.github/workflows/ci-dotnet.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'packages/urdu-dotnet/**'
-      - '.github/workflows/ci-dotnet.yml'
 
 jobs:
   test:
