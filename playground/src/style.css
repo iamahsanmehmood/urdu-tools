@@ -274,7 +274,7 @@ body::before {
   text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
 }
 
-.urdu-input, .latin-input, .num-input {
+.urdu-input, .latin-input, .num-input, .ctrl-input {
   width: 100%; padding: 9px 13px;
   background: var(--bg-2); border: 1px solid var(--border);
   border-radius: var(--r-sm); color: var(--text-0); outline: none;
@@ -284,6 +284,8 @@ body::before {
   font-size: 18px; font-family: var(--font-urdu); direction: rtl; text-align: right;
 }
 .urdu-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,92,252,0.1); }
+.ctrl-input { font-size: 14px; font-family: var(--font-urdu); direction: rtl; text-align: right; width: auto; }
+.ctrl-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,92,252,0.1); }
 .latin-input { font-size: 13px; }
 .latin-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(79,156,249,0.1); }
 .num-input { font-size: 13px; font-family: var(--font-code); }

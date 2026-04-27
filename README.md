@@ -10,8 +10,8 @@
 
 ### The only production-quality, zero-dependency Urdu text processing library with deterministic compound word detection.
 
-[![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
-[![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
+[![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg?branch=main)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
+[![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg?branch=main)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
 [![npm](https://img.shields.io/badge/npm-v1.1.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
@@ -79,6 +79,48 @@ This is the first open-source implementation of deterministic, multi-layer, N-gr
 | [HamaariUrdu](https://hamaariurdu.com) | Urdu language learning platform | Normalization, fingerprint, tokenization, search matching, numbers, compound detection |
 | [Pakistan Academy of Letters](https://pal.gov.pk) | Government literary institution | Normalization, search, sorting |
 | [Digital Library of PAL](https://dlp.gov.pk) | Government digital Urdu archive | Normalization, search, encoding |
+
+---
+
+## What's inside
+
+| Module | Solves |
+|--------|--------|
+| 🔗 **Compound Words** | `کتاب خانہ` detected as one unit, not split into meaningless pieces |
+| 🔤 **Normalization** | 12-layer pipeline — diacritics, ZWNJ, Alif, hamza, honorifics, Arabic look-alikes |
+| 🔍 **Search & Match** | 9 progressive layers — finds `عِلمٌ` even when stored as `علم` |
+| 🔢 **Numbers** | `bigint`-based South Asian system — ہزار · لاکھ · کروڑ · ارب · کھرب · نیل |
+| ✂️ **Tokenization** | Unicode-aware — preserves Izafat apostrophe, treats ZWNJ-bound compounds as one token |
+| 🔡 **Sorting** | 39-letter canonical Urdu alphabetical order — no database collation needed |
+| 🔀 **Transliteration** | Urdu ↔ Roman with 18 aspirated digraph rules (بھ→bh, چھ→chh …) |
+| 🔬 **Analysis** | Script detection, RTL check, Urdu density, character classification |
+| 📦 **Encoding** | InPage v1/v2/v3 decoder, Windows-1256 converter, encoding detection |
+| 🛠️ **String Utils** | Word-order reverse, grapheme-cluster count, Urdu segment extraction |
+
+---
+
+## Compound detection pipeline
+
+```
+Raw text
+   │
+   ├─► Layer 1 — Affix (UAWL)
+   │       100+ known Urdu prefix/suffix morphemes
+   │       خانہ گاہ پرست بے نا خوش شب غم …
+   │
+   ├─► Layer 2 — Izafat
+   │       zer mark (◌ِ) · hamza-above (◌ٔ) · vav-e-atf (و)
+   │       کتابِ حسنہ · روحِ رواں · علم و عمل
+   │
+   └─► Layer 3 — Lexicon
+           3,262 root entries · N-word tails · greedy longest-match
+           محنت مشقت · رنگ برنگ · انسائیکلوپیڈیا آف اسلام
+               │
+               └─► Span chaining
+                       امورِ خانہ  +  خانہ داری  →  امورِ خانہ داری
+
+Output: CompoundSpan[] with text · type · components · start · end
+```
 
 ---
 
