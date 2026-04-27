@@ -10,8 +10,8 @@
 
 ### The only production-quality, zero-dependency Urdu text processing library with deterministic compound word detection.
 
-[![CI – JS](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml/badge.svg?branch=main)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
-[![CI – .NET](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml/badge.svg?branch=main)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
+[![CI – JS](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-js.yml?branch=main&label=CI%20%E2%80%93%20JS&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-js.yml)
+[![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?branch=main&label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
 [![npm](https://img.shields.io/badge/npm-v1.1.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
