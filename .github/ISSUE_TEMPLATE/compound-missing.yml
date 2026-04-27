@@ -1,0 +1,82 @@
+name: 🔍 Missing Compound
+description: Report a compound word that should have been detected but wasn't
+title: "[Missing Compound] "
+labels: ["compound-lexicon", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for helping expand the compound lexicon!**
+        Every entry you add improves detection for all users.
+        You can use the [Playground](https://iamahsanmehmood.github.io/urdu-tools/) to test your compound before filing.
+
+  - type: input
+    id: word1
+    attributes:
+      label: First word (لفظ اول)
+      description: The first component of the compound
+      placeholder: e.g. کتاب
+    validations:
+      required: true
+
+  - type: input
+    id: word2
+    attributes:
+      label: Second word / rest of phrase (لفظ دوم)
+      description: The second component — can be multiple words for 3+ word compounds
+      placeholder: e.g. خانہ  or  آف اسلام
+    validations:
+      required: true
+
+  - type: input
+    id: full_compound
+    attributes:
+      label: Full compound phrase
+      description: The complete compound as it appears in text
+      placeholder: e.g. کتاب خانہ
+    validations:
+      required: true
+
+  - type: textarea
+    id: example_sentence
+    attributes:
+      label: Example sentence
+      description: A real sentence where this compound appears — helps verify it's genuine
+      placeholder: e.g. اس نے کتاب خانہ سے کتاب لی
+    validations:
+      required: false
+
+  - type: dropdown
+    id: compound_type
+    attributes:
+      label: What type of compound is this?
+      description: Best guess — we'll verify during review
+      options:
+        - Affix-based (one word is a known suffix/prefix like خانہ، گاہ، بے، نا)
+        - Izafat (contains ِ zer mark, hamza-above, or standalone و)
+        - Synonym pair (two near-synonyms used together like محنت مشقت)
+        - Echo compound (second word echoes first like رنگ برنگ)
+        - Fixed collocation / idiom (set expression)
+        - Multi-word title (3+ words, e.g. انسائیکلوپیڈیا آف اسلام)
+        - Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Where did you encounter this compound? (optional but helpful)
+      placeholder: e.g. Faiz Ahmed Faiz poetry / Urdu newspaper / Quran translation
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: verified
+    attributes:
+      label: Verification
+      options:
+        - label: I tested this pair in the Playground and it was NOT detected
+          required: false
+        - label: This is a genuine Urdu compound, not a random word pair
+          required: true

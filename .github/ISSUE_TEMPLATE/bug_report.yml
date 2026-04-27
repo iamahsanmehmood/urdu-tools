@@ -1,0 +1,102 @@
+name: 🐛 Bug Report
+description: Report incorrect output, a crash, or unexpected behaviour in any module
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please test your input in the [Live Playground](https://iamahsanmehmood.github.io/urdu-tools/) first — it helps isolate the issue quickly.
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: Which module?
+      options:
+        - normalization (normalize, fingerprint, stripDiacritics, etc.)
+        - search (match, fuzzyMatch, getAllNormalizations)
+        - numbers (numberToWords, formatCurrency, wordsToNumber)
+        - tokenization (tokenize, sentences, ngrams)
+        - compound (detectCompounds, joinCompounds, isCompound)
+        - string-utils (reverse, truncate, wordCount, charCount, extractUrdu)
+        - encoding (decodeInpage, detectEncoding)
+        - sorting (sort, compare, sortKey)
+        - transliteration (toRoman, fromRoman)
+        - analysis (isUrduChar, getScript, classifyChar)
+        - other / not sure
+    validations:
+      required: true
+
+  - type: input
+    id: function_name
+    attributes:
+      label: Function name
+      placeholder: e.g. normalize()
+    validations:
+      required: true
+
+  - type: textarea
+    id: input
+    attributes:
+      label: Exact input
+      description: Paste the exact Urdu string. Use Unicode escapes if the character is invisible (e.g. `‌` for ZWNJ).
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Source of text
+      description: Where did this text come from?
+      placeholder: keyboard / TinyMCE / Microsoft Word / database / copy-paste from website
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected output
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual output
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code to reproduce
+      render: typescript
+      value: |
+        import { normalize } from '@iamahsanmehmood/urdu-tools'
+        normalize('your input here')
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: e.g. 1.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Runtime
+      options:
+        - Node.js
+        - Browser
+        - .NET 9
+        - .NET 8
+        - Other
+    validations:
+      required: true

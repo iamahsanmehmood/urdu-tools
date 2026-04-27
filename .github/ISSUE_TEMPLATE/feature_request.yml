@@ -1,0 +1,67 @@
+name: 💡 Feature Request
+description: Suggest a new function, module, or enhancement
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area does this affect?
+      options:
+        - New function in an existing module
+        - New module entirely
+        - Compound lexicon expansion
+        - Performance improvement
+        - .NET / C# parity (JS feature missing in .NET)
+        - Playground UI
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the Urdu text processing problem you're hitting. Real examples are very helpful.
+      placeholder: |
+        e.g. "When I search for اردو in my database, users sometimes type with Arabic ي instead of
+        Urdu ی and get zero results. I need a way to normalize before indexing."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_api
+    attributes:
+      label: Proposed API (optional)
+      description: How would you want to call this? TypeScript signature preferred.
+      render: typescript
+      placeholder: |
+        // e.g.
+        normalizeCharacters(text: string): string
+        // ي → ی, ك → ک, ه → ہ
+    validations:
+      required: false
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example inputs and outputs
+      description: Real Urdu text examples — the more specific, the better
+      placeholder: |
+        Input:  'يہ ايک مثال ہے'  (Arabic ye)
+        Output: 'یہ ایک مثال ہے'  (Urdu ye)
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: How important is this to your project?
+      options:
+        - Critical — blocking production use
+        - High — significant workaround needed without it
+        - Medium — nice to have
+        - Low — minor improvement
+    validations:
+      required: true

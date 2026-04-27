@@ -23,6 +23,11 @@ const $checked = (id: string) => (document.getElementById(id) as HTMLInputElemen
 
 function esc(s: string) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }
 
+function buildIssueUrl(title: string, body: string, labels: string): string {
+  const base = 'https://github.com/iamahsanmehmood/urdu-tools/issues/new'
+  return `${base}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}&labels=${encodeURIComponent(labels)}`
+}
+
 function toUniEsc(s: string) {
   return Array.from(s).map(c => {
     const cp = c.codePointAt(0)!
@@ -1387,7 +1392,18 @@ wire('btn-detect-compound', () => {
       izafat: $checked('dc-izafat'),
     })
     if (spans.length === 0) {
-      setResultHTML('r-detect-compound', `<div class="result-placeholder">No compounds detected in this text</div>`)
+      setResultHTML('r-detect-compound', `
+        <div class="result-placeholder">No compounds detected in this text</div>
+        <div class="report-missed">
+          <div class="report-missed-label">💡 Expected a compound here?</div>
+          <div class="report-missed-row">
+            <input id="missed-w1" class="ctrl-input" placeholder="Word 1" dir="rtl" style="width:120px" />
+            <span style="color:var(--text-3);padding:0 4px">+</span>
+            <input id="missed-w2" class="ctrl-input" placeholder="Word 2 (or full phrase)" dir="rtl" style="flex:1" />
+            <a id="report-missed-link" class="report-btn-primary" href="https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml" target="_blank" rel="noopener">Open Issue →</a>
+          </div>
+        </div>`)
+      wireMissedReport(text)
       return
     }
     setResultHTML('r-detect-compound', `
@@ -1397,16 +1413,58 @@ wire('btn-detect-compound', () => {
             <span class="word-item-n">#${i + 1}</span>
             <span class="word-item-t" style="font-size:15px">${esc(s.text)}</span>
             <span class="card-badge" style="background:#e11d4818;color:#e11d48;border:1px solid #e11d4835;font-size:10px">${esc(s.type)}</span>
+            <a class="report-btn-wrong" href="${buildIssueUrl(
+              `[Wrong Detection] ${s.text}`,
+              `**Wrongly detected compound:** \`${s.text}\`\n**Detection type:** ${s.type}\n**Full input sentence:**\n\`\`\`\n${text}\n\`\`\`\n**Components:** ${s.components.join(' + ')}\n\n**Why is this NOT a compound?**\n<!-- Please explain -->`,
+              'compound-lexicon,bug'
+            )}" target="_blank" rel="noopener" title="Report: this is NOT a compound">⚑ Wrong</a>
           </div>
           <div style="padding:0 0 8px 32px;font-size:11px;color:var(--text-2)">
             Components: ${s.components.map(c => `<span style="background:var(--bg-3);padding:2px 6px;border-radius:4px;margin:0 2px">${esc(c)}</span>`).join(' + ')}
             · indices [${s.start}–${s.end}]
           </div>`).join('')}
       </div>
-      <div class="result-meta" style="margin-top:8px">${spans.length} compound(s) detected</div>`,
+      <div class="result-meta" style="margin-top:8px">${spans.length} compound(s) detected</div>
+      <div class="report-missed">
+        <div class="report-missed-label">💡 Missing a compound in this text?</div>
+        <div class="report-missed-row">
+          <input id="missed-w1" class="ctrl-input" placeholder="Word 1" dir="rtl" style="width:120px" />
+          <span style="color:var(--text-3);padding:0 4px">+</span>
+          <input id="missed-w2" class="ctrl-input" placeholder="Word 2 (or full phrase)" dir="rtl" style="flex:1" />
+          <a id="report-missed-link" class="report-btn-primary" href="https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml" target="_blank" rel="noopener">Open Issue →</a>
+        </div>
+      </div>`,
       spans.map(s => s.text).join(', '))
+    wireMissedReport(text)
   } catch (e) { setError('r-detect-compound', String(e)) }
 })
+
+function wireMissedReport(sentence: string) {
+  const update = () => {
+    const w1 = ($('missed-w1') as HTMLInputElement)?.value.trim() ?? ''
+    const w2 = ($('missed-w2') as HTMLInputElement)?.value.trim() ?? ''
+    const link = $('report-missed-link') as HTMLAnchorElement
+    if (!link) return
+    if (w1 && w2) {
+      link.href = buildIssueUrl(
+        `[Missing Compound] ${w1} ${w2}`,
+        `**First word:** \`${w1}\`\n**Second word / rest of phrase:** \`${w2}\`\n**Full compound:** \`${w1} ${w2}\`\n**Example sentence:**\n\`\`\`\n${sentence}\n\`\`\`\n**Compound type:** <!-- affix / izafat / synonym pair / echo compound / other -->\n\n**Why is this a compound?**\n<!-- Briefly explain -->`,
+        'compound-lexicon,enhancement'
+      )
+      link.style.opacity = '1'
+      link.style.pointerEvents = 'auto'
+    } else {
+      link.href = 'https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml'
+      link.style.opacity = '0.45'
+      link.style.pointerEvents = 'none'
+    }
+  }
+  setTimeout(() => {
+    $('missed-w1')?.addEventListener('input', update)
+    $('missed-w2')?.addEventListener('input', update)
+    update()
+  }, 0)
+}
 
 wire('btn-join-compound', () => {
   try {
@@ -1445,13 +1503,29 @@ wire('btn-is-compound', () => {
     const w1 = $v('ic-w1'), w2 = $v('ic-w2')
     if (!w1 || !w2) { setError('r-is-compound', 'Enter both words'); return }
     const result = isCompound(w1, w2)
+    const reportUrl = result.matched
+      ? buildIssueUrl(
+          `[Wrong Detection] ${w1} ${w2}`,
+          `**isCompound() returned matched for:** \`${w1}\` + \`${w2}\`\n**Detection type:** ${result.type}\n\n**Why is this NOT a compound?**\n<!-- Please explain -->`,
+          'compound-lexicon,bug'
+        )
+      : buildIssueUrl(
+          `[Missing Compound] ${w1} ${w2}`,
+          `**First word:** \`${w1}\`\n**Second word / rest of phrase:** \`${w2}\`\n**Full compound:** \`${w1} ${w2}\`\n**Example sentence:**\n\`\`\`\n<!-- paste a sentence using this compound -->\n\`\`\`\n**Compound type:** <!-- affix / izafat / synonym pair / echo compound / other -->\n\n**Why is this a compound?**\n<!-- Briefly explain -->`,
+          'compound-lexicon,enhancement'
+        )
     setResultHTML('r-is-compound', `
-      <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <div class="stat-box" style="font-family:var(--font-urdu);font-size:22px;padding:14px 20px">${esc(w1)} + ${esc(w2)}</div>
         <div>
           <span class="match-badge ${result.matched ? 'yes' : 'no'}">${result.matched ? `✓ Compound (${result.type})` : '✗ Not a compound'}</span>
           ${result.matched ? `<div class="result-meta" style="margin-top:8px">Detection method: <strong>${esc(result.type ?? '')}</strong></div>` : ''}
         </div>
+      </div>
+      <div style="margin-top:10px">
+        <a class="${result.matched ? 'report-btn-wrong' : 'report-btn-primary'}" href="${reportUrl}" target="_blank" rel="noopener">
+          ${result.matched ? '⚑ Report: this is NOT a compound' : '💡 Report: this SHOULD be a compound'}
+        </a>
       </div>`, `${w1} + ${w2} → ${result.matched ? result.type : 'no match'}`)
   } catch (e) { setError('r-is-compound', String(e)) }
 })

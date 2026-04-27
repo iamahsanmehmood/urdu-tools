@@ -401,6 +401,28 @@ textarea.urdu-input, textarea.latin-input { resize: vertical; min-height: 72px; 
 .word-item-n { font-size:10px; color:var(--text-3); font-family:var(--font-code); }
 .word-item-t { font-family:var(--font-urdu); font-size:16px; color:var(--text-0); }
 
+/* ── Compound report buttons ── */
+.report-btn-wrong {
+  font-size:10px; padding:3px 8px; border-radius:4px; text-decoration:none; cursor:pointer;
+  background:rgba(244,63,94,0.10); color:#fb7185; border:1px solid rgba(244,63,94,0.3);
+  transition:background 0.15s, border-color 0.15s; white-space:nowrap; direction:ltr;
+}
+.report-btn-wrong:hover { background:rgba(244,63,94,0.22); border-color:rgba(244,63,94,0.55); }
+.report-btn-primary {
+  font-size:11px; padding:5px 12px; border-radius:5px; text-decoration:none; cursor:pointer;
+  background:rgba(124,92,252,0.15); color:var(--purple); border:1px solid rgba(124,92,252,0.35);
+  transition:background 0.15s, border-color 0.15s; white-space:nowrap; direction:ltr;
+}
+.report-btn-primary:hover { background:rgba(124,92,252,0.28); border-color:rgba(124,92,252,0.6); }
+
+/* ── Report missed compound section ── */
+.report-missed {
+  margin-top:12px; padding:10px 12px; background:var(--bg-3);
+  border-radius:var(--r-sm); border:1px solid var(--border);
+}
+.report-missed-label { font-size:11px; color:var(--text-2); margin-bottom:7px; }
+.report-missed-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+
 /* ── Stats grid ── */
 .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:8px; margin-top:8px; }
 .stat-box { background:var(--bg-3); border-radius:var(--r-sm); padding:10px; text-align:center; }

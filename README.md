@@ -709,7 +709,20 @@ Covers all 35+ functions with live code examples, type signatures, edge case not
 
 ## Contributing
 
-Issues, PRs, and additional compound lexicon entries are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+**اردو سافٹ ویئر کو بہتر بنانے میں ہمارا ساتھ دیں۔**
+
+Contributions of any size are welcome — from a single compound word entry to a full new module.
+
+| Want to... | How |
+|-----------|-----|
+| Add a compound word | [CONTRIBUTING.md → Adding compound words](CONTRIBUTING.md#adding-compound-words) or use the Playground report button |
+| Report a missing compound | [Open a Missing Compound issue](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml) |
+| Report a wrong detection | [Open a Wrong Detection issue](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-wrong.yml) |
+| Report a bug | [Open a Bug Report](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=bug_report.yml) |
+| Request a feature | [Open a Feature Request](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=feature_request.yml) |
+| Contribute code | See [CONTRIBUTING.md](CONTRIBUTING.md) for full dev setup and requirements |
+
+The compound lexicon is the highest-impact area for non-developer contributions — if you're a native Urdu speaker, adding verified compound pairs directly improves detection for everyone.
 
 ---
 

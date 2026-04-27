@@ -1,0 +1,59 @@
+name: ⚑ Wrong Compound Detection
+description: Report a word pair that was incorrectly detected as a compound (false positive)
+title: "[Wrong Detection] "
+labels: ["compound-lexicon", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **False positives matter.** Incorrect detections corrupt tokenization and search.
+        You can reproduce this in the [Playground](https://iamahsanmehmood.github.io/urdu-tools/) → Compound Words → Detect Compounds.
+
+  - type: input
+    id: wrongly_detected
+    attributes:
+      label: Compound that was wrongly detected
+      description: The full text of the span the detector returned
+      placeholder: e.g. اچھا آدمی
+    validations:
+      required: true
+
+  - type: textarea
+    id: full_input
+    attributes:
+      label: Full input sentence
+      description: The complete text you ran through detectCompounds()
+      placeholder: Paste the full sentence here
+    validations:
+      required: true
+
+  - type: dropdown
+    id: detection_type
+    attributes:
+      label: What type did the detector report?
+      options:
+        - affix
+        - izafat
+        - lexicon
+        - not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_wrong
+    attributes:
+      label: Why is this NOT a compound?
+      description: Explain briefly — e.g. "these are two independent words with no morphological or semantic connection"
+      placeholder: e.g. اچھا and آدمی are just adjective + noun, not a fixed compound
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: verified
+    attributes:
+      label: Verification
+      options:
+        - label: I confirmed this in the Playground and the detection appeared incorrect
+          required: false
+        - label: I am a native Urdu speaker or have verified with one
+          required: false

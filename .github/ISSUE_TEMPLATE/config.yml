@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Ask a question / discuss
+    url: https://github.com/iamahsanmehmood/urdu-tools/discussions
+    about: General questions, ideas, or usage help — not a bug or feature request
+  - name: 📖 API Documentation
+    url: https://iamahsanmehmood.github.io/urdu-tools/docs/
+    about: Full API reference with live examples
+  - name: ▶ Live Playground
+    url: https://iamahsanmehmood.github.io/urdu-tools/
+    about: Test any function interactively in your browser
