@@ -187,7 +187,7 @@ public static class UrduCompoundDetector
     {
         if (spans.Count <= 1) return spans;
 
-        var sorted = spans.OrderBy(s => s.Start).ThenByDescending(s => s.End - s.Start).ToList();
+        var sorted = spans.OrderBy(s => s.StartWord).ThenByDescending(s => s.EndWord - s.StartWord).ToList();
         var merged = new List<CompoundSpan> { sorted[0] };
 
         for (int i = 1; i < sorted.Count; i++)
@@ -195,15 +195,15 @@ public static class UrduCompoundDetector
             var current = sorted[i];
             var last = merged[^1];
 
-            if (current.Start <= last.End)
+            if (current.StartWord <= last.EndWord)
             {
-                var newEnd = Math.Max(last.End, current.End);
-                var components = words[last.Start..(newEnd + 1)];
+                var newEnd = Math.Max(last.EndWord, current.EndWord);
+                var components = words[last.StartWord..(newEnd + 1)];
                 merged[^1] = new CompoundSpan(
                     string.Join(" ", components),
                     last.Type,
                     components,
-                    last.Start,
+                    last.StartWord,
                     newEnd);
             }
             else
