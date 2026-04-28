@@ -95,6 +95,44 @@ describe('COMPOUND_LEXICON', () => {
   })
 })
 
+describe('issue #1 — missing compound: برف باری (snowfall)', () => {
+  it('detects برف باری as a lexicon compound', () => {
+    const spans = detectLexiconCompounds(['برف', 'باری'])
+    expect(spans).toHaveLength(1)
+    expect(spans[0]!.text).toBe('برف باری')
+    expect(spans[0]!.type).toBe('lexicon')
+  })
+
+  it('isInLexicon returns true for برف + باری', () => {
+    expect(isInLexicon('برف', 'باری')).toBe(true)
+  })
+
+  it('detects برف باری in a sentence', () => {
+    const spans = detectCompounds('آج شدید برف باری ہو رہی ہے')
+    const detected = spans.map(s => s.text)
+    expect(detected).toContain('برف باری')
+  })
+})
+
+describe('issue #2 — missing compound: اخلاق حسنہ (good morals)', () => {
+  it('detects اخلاق حسنہ as a lexicon compound', () => {
+    const spans = detectLexiconCompounds(['اخلاق', 'حسنہ'])
+    expect(spans).toHaveLength(1)
+    expect(spans[0]!.text).toBe('اخلاق حسنہ')
+    expect(spans[0]!.type).toBe('lexicon')
+  })
+
+  it('isInLexicon returns true for اخلاق + حسنہ', () => {
+    expect(isInLexicon('اخلاق', 'حسنہ')).toBe(true)
+  })
+
+  it('detects اخلاق حسنہ in a sentence', () => {
+    const spans = detectCompounds('ہمیں اخلاق حسنہ اپنانے چاہییں')
+    const detected = spans.map(s => s.text)
+    expect(detected).toContain('اخلاق حسنہ')
+  })
+})
+
 describe('full orchestrator — user test case', () => {
   const TEXT = 'صبح سویرے جب سورج طلوع ہوتا ہے تو بست و کشاد کائنات کا حسن دیکھنے لائق ہوتا ہے۔ باغوں میں رنگ برنگے اور خوش نما پھول کھلتے ہیں اور ان کی عطر بیز خوشبو چاروں طرف پھیل جاتی ہے۔ پرندوں کی چہل پہل اور ان کی خوش الحانی فضا میں ایک روح پرور سماں باندھ دیتی ہے۔ جو لوگ شب بیداری کے عادی ہیں، وہ اس سحر انگیز وقت کی قدر جانتے ہیں۔ کسان اپنی روزی روٹی کی تلاش میں کھیت کھلیان کا رخ کرتے ہیں اور محنت مشقت سے اپنے امورِ خانہ داری چلاتے ہیں۔ حقیقت یہ ہے کہ قدرت کے یہ نظارے انسان کو فکر و عمل کی دعوت دیتے ہیں۔'
 
