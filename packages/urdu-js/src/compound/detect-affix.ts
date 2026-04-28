@@ -29,12 +29,23 @@ const STOP_WORDS: ReadonlySet<string> = new Set([
   // Pronouns / demonstratives
   'وہ', 'یہ', 'ان', 'اس', 'جو', 'جس', 'جن', 'کس', 'کن',
   'اپنا', 'اپنے', 'اپنی',
+  // Personal pronouns — ہم is far more commonly the pronoun 'we/us'
+  // than the compound prefix 'co-/same', so it should not form
+  // compounds with the word that follows it in running text.
+  // Real ہم-compounds (ہم وطن, ہم زبان) are still detected because
+  // the PARTNER (وطن, زبان) is not a stop word.
+  'ہم',
   // Auxiliaries / copula
   'ہے', 'ہیں', 'تھا', 'تھے', 'تھی', 'ہو', 'ہوا', 'ہوتا', 'ہوتی', 'ہوتے',
   'گا', 'گی', 'گے',
   // Conditional / temporal / misc
   'تو', 'جب', 'اگر', 'بھی', 'نہ', 'نہیں', 'پھر',
   'والا', 'والے', 'والی',
+  // Common nouns/adjectives that follow ہر in running text
+  // (ہر مسلمان = "every Muslim", NOT a compound word)
+  'مسلمان', 'انسان', 'شخص', 'آدمی', 'بندہ', 'عورت', 'بچہ',
+  'اچھے', 'اچھی', 'اچھا', 'برے', 'بری', 'برا',
+  'ایک', 'دو', 'تین', 'چار',
   // Common verbs that should not be compound partners
   'کرتے', 'کرتی', 'کرتا', 'کریں', 'کیا',
   'چلاتے', 'چلاتی', 'چلاتا',
@@ -42,6 +53,8 @@ const STOP_WORDS: ReadonlySet<string> = new Set([
   'لیتے', 'لیتی', 'لیتا',
   'آتے', 'آتی', 'آتا',
   'جاتے', 'جاتی', 'جاتا',
+  // Misc words commonly appearing after prefixes in non-compound context
+  'لوگ', 'لوگوں', 'بات', 'وقت', 'دوست',
 ])
 
 /**
@@ -69,9 +82,12 @@ export function detectAffixCompounds(words: string[]): CompoundSpan[] {
     // - w2 is a known SUFFIX → w1 is the compound partner (skip if w1 is a stop word)
     const w1IsPrefix = PREFIX_SET.has(w1)
     const w2IsSuffix = SUFFIX_SET.has(w2)
+    const w2IsPrefix = PREFIX_SET.has(w2)
 
+    // If w2 is also a prefix, it's likely starting its own compound
+    // (e.g. ہم بے → بے is starting بے خبر, not a partner of ہم)
     const matched =
-      (w1IsPrefix && !STOP_WORDS.has(w2)) ||
+      (w1IsPrefix && !STOP_WORDS.has(w2) && !w2IsPrefix) ||
       (w2IsSuffix && !STOP_WORDS.has(w1))
 
     if (matched) {
