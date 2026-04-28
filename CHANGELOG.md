@@ -5,15 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0] - 2026-04-28
+## [1.2.0] – 2026-04-28
 
 ### Added
 - 35 new compound lexicon entries (synonym pairs, echo compounds)
-- C# compound detection module (`UrduTools.Core.Compound`)
+- C# compound detection module (`UrduTools.Core.Compound`) with full lexicon parity (3,262 roots)
 - New affix stop words to reduce false positives
 
 ### Changed
 - Prefix-on-prefix guard in `detect-affix.ts`
+- C# `CompoundSpan` fields renamed `Start`/`End` → `StartWord`/`EndWord` (word indices, not char offsets)
+
+Thanks to @nooraliqureshi for this contribution! 🎉
+
+---
+
+## [1.1.1] – 2026-04-28
+
+### Fixed
+
+**@iamahsanmehmood/urdu-tools (TypeScript)**
+
+- Added missing compound lexicon entry `برف باری` (snowfall) — fixes #1
+- Added missing compound lexicon entry `اخلاق حسنہ` (good morals) — fixes #2
+- 6 new tests for the above compounds (detection, `isInLexicon`, sentence context)
 
 ---
 

@@ -68,6 +68,7 @@ This is the first open-source implementation of deterministic, multi-layer, N-gr
 - [Research & Academic Credits](#research--academic-credits)
 - [API Reference](#api-reference)
 - [License](#license)
+- [Contributors](#contributors)
 - [Author](#author)
 
 ---
@@ -771,6 +772,19 @@ The compound lexicon is the highest-impact area for non-developer contributions 
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+---
+
+## Contributors
+
+Thank you to everyone who has contributed to urdu-tools! 🎉
+
+| Contributor | Contributions |
+|-------------|---------------|
+| [@iamahsanmehmood](https://github.com/iamahsanmehmood) | Creator & maintainer |
+| [@nooraliqureshi](https://github.com/nooraliqureshi) | Compound lexicon expansion, affix false-positive fixes, C# compound module |
+
+Want to see your name here? See [CONTRIBUTING.md](CONTRIBUTING.md) for how to get started.
 
 ---
 
