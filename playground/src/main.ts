@@ -267,11 +267,11 @@ $('app')!.innerHTML = `
       <div class="h-logo">اُ</div>
       <div>
         <div class="h-title">Urdu Tools Playground</div>
-        <div class="h-sub">@iamahsanmehmood/urdu-tools · v1.0.0 · 10 Modules</div>
+        <div class="h-sub">@iamahsanmehmood/urdu-tools · v1.2.0 · 10 Modules</div>
       </div>
     </div>
     <div class="h-right">
-      <span class="h-pill">284 Tests · TypeScript · .NET</span>
+      <span class="h-pill">471 Tests · TypeScript · .NET</span>
       <a class="h-docs" href="./docs/" title="Full API documentation">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         <span class="h-link-text">Docs</span>
