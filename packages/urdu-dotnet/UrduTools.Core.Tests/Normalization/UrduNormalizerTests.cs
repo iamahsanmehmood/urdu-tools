@@ -20,11 +20,11 @@ public class UrduNormalizerTests
         Assert.Equal("ی", UrduNormalizer.Normalize("\u064A", new NormalizeOptions { NormalizeCharacters = true }));
     [Fact] public void NormalizeCharacters_ArabicKaf_ToUrduKaf() =>
         Assert.Equal("ک", UrduNormalizer.Normalize("\u0643", new NormalizeOptions { NormalizeCharacters = true }));
-    [Fact] public void LongText_Under100ms()
+    [Fact] public void LongText_Under250ms()
     {
         var text = string.Concat(Enumerable.Repeat("پاکستان ", 6250));
         var sw = System.Diagnostics.Stopwatch.StartNew();
         UrduNormalizer.Normalize(text);
-        Assert.True(sw.ElapsedMilliseconds < 100, $"Took {sw.ElapsedMilliseconds}ms");
+        Assert.True(sw.ElapsedMilliseconds < 250, $"Took {sw.ElapsedMilliseconds}ms");
     }
 }

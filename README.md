@@ -14,12 +14,12 @@
 [![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
-[![npm](https://img.shields.io/badge/npm-v1.1.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
-[![NuGet](https://img.shields.io/badge/nuget-v1.1.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
+[![npm](https://img.shields.io/badge/npm-v1.2.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
+[![NuGet](https://img.shields.io/badge/nuget-v1.2.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-392_passing-brightgreen?style=flat-square)](#)
+[![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
-**TypeScript · C#/.NET · Zero Dependencies · 392 Tests**
+**TypeScript · C#/.NET · Zero Dependencies · 471 Tests**
 
 <br/>
 
