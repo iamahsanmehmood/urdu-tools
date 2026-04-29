@@ -1047,7 +1047,7 @@ wire('btn-all-norms', () => {
     const forms = getAllNormalizations($v('gn-w'))
     setResultHTML('r-all-norms', `
       <div class="norm-ladder">
-        ${forms.map((f, i) => `
+        ${forms.map((f: string, i: number) => `
           <div class="norm-step">
             <span class="norm-step-n">${i + 1}</span>
             <span class="norm-step-v">${esc(f)}</span>
@@ -1104,15 +1104,15 @@ wire('btn-tokenize', () => {
       text = joinCompounds(text)
     }
     const tokens = tokenize(text)
-    const chips = tokens.map(tok =>
+    const chips = tokens.map((tok: { text: string; type: string }) =>
       `<span class="token-chip ${tok.type}" title="${tok.type}: U+${(tok.text.codePointAt(0) || 0).toString(16).toUpperCase()}">${esc(tok.text)}</span>`
     ).join('')
     const counts: Record<string, number> = {}
-    tokens.forEach(t => { counts[t.type] = (counts[t.type] || 0) + 1 })
+    tokens.forEach((t: { type: string }) => { counts[t.type] = (counts[t.type] || 0) + 1 })
     setResultHTML('r-tokenize', `
       <div class="token-chips">${chips}</div>
       <div class="result-meta" style="margin-top:8px">
-        ${Object.entries(counts).map(([t, c]) => `${t}: ${c}`).join(' · ')} · total: ${tokens.length}
+        ${Object.entries(counts).map(([t, c]: [string, number]) => `${t}: ${c}`).join(' · ')} · total: ${tokens.length}
       </div>`, tokens.map(t => t.text).join(' '))
   } catch (e) { setError('r-tokenize', String(e)) }
 })
@@ -1122,7 +1122,7 @@ wire('btn-sentences', () => {
     const sents = sentences($v('sent-t'))
     setResultHTML('r-sentences', `
       <div class="word-list">
-        ${sents.map((s, i) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t" style="font-size:14px">${esc(s)}</span></div>`).join('')}
+        ${sents.map((s: string, i: number) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t" style="font-size:14px">${esc(s)}</span></div>`).join('')}
       </div>
       <div class="result-meta" style="margin-top:6px">${sents.length} sentence(s)</div>`, sents.join('\n'))
   } catch (e) { setError('r-sentences', String(e)) }
@@ -1130,12 +1130,12 @@ wire('btn-sentences', () => {
 
 wire('btn-ngrams', () => {
   try {
-    const toks = tokenize($v('ng-t')).filter(t => t.type === 'urdu-word').map(t => t.text)
+    const toks = tokenize($v('ng-t')).filter((t: { type: string }) => t.type === 'urdu-word').map((t: { text: string }) => t.text)
     const n = Math.max(1, parseInt($v('ng-n')) || 2)
     const grams = ngrams(toks, n)
     setResultHTML('r-ngrams', `
       <div class="word-list">
-        ${grams.map((g, i) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t" style="font-size:13px">[${g.map(w => `"${esc(w)}"`).join(', ')}]</span></div>`).join('')}
+        ${grams.map((g: string[], i: number) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t" style="font-size:13px">[${g.map((w: string) => `"${esc(w)}"`).join(', ')}]</span></div>`).join('')}
       </div>
       <div class="result-meta" style="margin-top:6px">${grams.length} ${n}-gram(s) from ${toks.length} tokens</div>`, JSON.stringify(grams))
   } catch (e) { setError('r-ngrams', String(e)) }
@@ -1175,7 +1175,7 @@ wire('btn-extract', () => {
     const segs = extractUrdu($v('ex-t'))
     setResultHTML('r-extract', `
       <div class="word-list">
-        ${segs.map((s, i) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t">${esc(s)}</span></div>`).join('')}
+        ${segs.map((s: string, i: number) => `<div class="word-item"><span class="word-item-n">#${i + 1}</span><span class="word-item-t">${esc(s)}</span></div>`).join('')}
       </div>
       <div class="result-meta" style="margin-top:6px">${segs.length} segment(s) extracted</div>`, segs.join(' | '))
   } catch (e) { setError('r-extract', String(e)) }
@@ -1231,7 +1231,7 @@ wire('btn-inpage', () => {
     const result = decodeInpage(buf, ver)
     setResultHTML('r-inpage', `
       <div class="word-list">
-        ${result.paragraphs.map((p, i) => `<div class="word-item"><span class="word-item-n">¶${i + 1}</span><span class="word-item-t">${esc(p) || '<em style="opacity:0.4">empty</em>'}</span></div>`).join('')}
+        ${result.paragraphs.map((p: string, i: number) => `<div class="word-item"><span class="word-item-n">¶${i + 1}</span><span class="word-item-t">${esc(p) || '<em style="opacity:0.4">empty</em>'}</span></div>`).join('')}
       </div>
       <div class="result-meta" style="margin-top:6px">${result.paragraphs.length} paragraph(s) · ${result.pageBreakIndices.length} page break(s)</div>`,
       result.paragraphs.join('\n'))
@@ -1259,7 +1259,7 @@ wire('btn-sort', () => {
     if (rev) sorted.reverse()
     setResultHTML('r-sort', `
       <div class="word-list">
-        ${sorted.map((w, i) => `<div class="word-item"><span class="word-item-n">${i + 1}</span><span class="word-item-t">${esc(w)}</span><span class="word-item-n" style="font-size:9px">${esc(toUniEsc(sortKey(w)).slice(0, 20))}</span></div>`).join('')}
+        ${sorted.map((w: string, i: number) => `<div class="word-item"><span class="word-item-n">${i + 1}</span><span class="word-item-t">${esc(w)}</span><span class="word-item-n" style="font-size:9px">${esc(toUniEsc(sortKey(w)).slice(0, 20))}</span></div>`).join('')}
       </div>
       <div class="result-meta" style="margin-top:6px">${sorted.length} items sorted in ${rev ? 'reverse' : ''} Urdu alphabetical order</div>`, sorted.join('، '))
   } catch (e) { setError('r-sort', String(e)) }
@@ -1408,7 +1408,7 @@ wire('btn-detect-compound', () => {
     }
     setResultHTML('r-detect-compound', `
       <div class="word-list">
-        ${spans.map((s, i) => `
+        ${spans.map((s: { text: string; type: string; components: string[]; start: number; end: number }, i: number) => `
           <div class="word-item">
             <span class="word-item-n">#${i + 1}</span>
             <span class="word-item-t" style="font-size:15px">${esc(s.text)}</span>
@@ -1420,7 +1420,7 @@ wire('btn-detect-compound', () => {
             )}" target="_blank" rel="noopener" title="Report: this is NOT a compound">⚑ Wrong</a>
           </div>
           <div style="padding:0 0 8px 32px;font-size:11px;color:var(--text-2)">
-            Components: ${s.components.map(c => `<span style="background:var(--bg-3);padding:2px 6px;border-radius:4px;margin:0 2px">${esc(c)}</span>`).join(' + ')}
+            Components: ${s.components.map((c: string) => `<span style="background:var(--bg-3);padding:2px 6px;border-radius:4px;margin:0 2px">${esc(c)}</span>`).join(' + ')}
             · indices [${s.start}–${s.end}]
           </div>`).join('')}
       </div>
@@ -1434,7 +1434,7 @@ wire('btn-detect-compound', () => {
           <a id="report-missed-link" class="report-btn-primary" href="https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml" target="_blank" rel="noopener">Open Issue →</a>
         </div>
       </div>`,
-      spans.map(s => s.text).join(', '))
+      spans.map((s: { text: string }) => s.text).join(', '))
     wireMissedReport(text)
   } catch (e) { setError('r-detect-compound', String(e)) }
 })

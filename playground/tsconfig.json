@@ -5,7 +5,10 @@
     "moduleResolution": "bundler",
     "strict": true,
     "lib": ["ES2022", "DOM"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@iamahsanmehmood/urdu-tools": ["../packages/urdu-js/dist/index.d.ts"]
+    }
   },
   "include": ["src"]
 }
