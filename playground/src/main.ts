@@ -245,7 +245,7 @@ const PRESETS: Record<string, { label: string; fields: Record<string, string> }[
   ],
   'r-to-roman': [
     { label: 'پاکستان', fields: { 'tr-u': 'پاکستان زندہ باد' } },
-    { label: 'Aspirated', fields: { 'tr-u': 'بھارت چھوٹا بھائی' } },
+    { label: 'Aspirated', fields: { 'tr-u': 'بھاگ کر چھت پر چھپ گیا' } },
   ],
   'r-detect-compound': [
     { label: 'کتاب خانہ', fields: { 'dc-text': 'کتاب خانہ بہت اچھا ہے' } },
