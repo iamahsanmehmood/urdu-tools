@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>UrduTools.Core</AssemblyName>
     <RootNamespace>UrduTools.Core</RootNamespace>
-    <PackageId>UrduTools.Core</PackageId>
-    <Version>1.3.3</Version>
+    <PackageId>Urdu-Tools</PackageId>
+    <Version>1.4.0</Version>
     <Authors>Ahsan Mehmood</Authors>
     <Description>Comprehensive Urdu text processing library — normalization, analysis, search, numbers, tokenization, string utilities, sorting, and transliteration. Zero dependencies.</Description>
     <PackageTags>urdu;arabic;nlp;text;unicode;rtl;normalization</PackageTags>
