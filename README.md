@@ -14,8 +14,8 @@
 [![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
-[![npm](https://img.shields.io/badge/npm-v1.3.0-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
-[![NuGet](https://img.shields.io/badge/nuget-v1.3.0-blue?style=flat-square)](https://www.nuget.org/packages/UrduTools)
+[![npm](https://img.shields.io/badge/npm-v1.3.3-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
+[![NuGet](https://img.shields.io/badge/nuget-v1.3.3-blue?style=flat-square)](https://www.nuget.org/packages/UrduTools.Core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
@@ -26,7 +26,7 @@
 [▶ Try the Live Playground](https://iamahsanmehmood.github.io/urdu-tools/) &nbsp;·&nbsp;
 [📖 Full API Documentation](https://iamahsanmehmood.github.io/urdu-tools/docs/) &nbsp;·&nbsp;
 [📦 npm Package](https://www.npmjs.com/package/urdu-tools) &nbsp;·&nbsp;
-[📦 NuGet Package](https://www.nuget.org/packages/UrduTools)
+[📦 NuGet Package](https://www.nuget.org/packages/UrduTools.Core)
 
 </div>
 
@@ -184,8 +184,8 @@ No statistical model trained on general text reliably covers all four strategies
 
 | Package | Language | Install |
 |---------|----------|---------|
-| [`@iamahsanmehmood/urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install urdu-tools` |
-| [`UrduTools.Core`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package UrduTools` |
+| [`urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install urdu-tools` |
+| [`UrduTools.Core`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package UrduTools.Core` |
 
 > **Package registry:** Public registries (npmjs.com and nuget.org). No authentication required.
 
@@ -235,7 +235,7 @@ joinCompounds('کتاب خانہ اچھی جگہ ہے')
 ### C# / .NET
 
 ```bash
-dotnet add package UrduTools
+dotnet add package UrduTools.Core
 ```
 
 ```csharp

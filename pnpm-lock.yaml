@@ -29,7 +29,7 @@ importers:
 
   playground:
     dependencies:
-      '@iamahsanmehmood/urdu-tools':
+      urdu-tools:
         specifier: workspace:*
         version: link:../packages/urdu-js
     devDependencies:

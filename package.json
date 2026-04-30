@@ -1,7 +1,7 @@
 {
   "name": "urdu-tools",
   "private": true,
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Urdu text processing monorepo",
   "scripts": {
     "build": "pnpm -r build",
