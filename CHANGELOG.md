@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] – 2026-04-30
+
+### Added
+- **C# API documentation**: Added complete C# code examples for all 9 modules (Normalization, Analysis, Search, Numbers, Tokenization, String Utils, Sorting, Transliteration, Compound) in the README.
+- Expanded the C# Quick Start section to cover every module with correct class/method names.
+
 ## [1.4.1] – 2026-04-30
 
 ### Fixed

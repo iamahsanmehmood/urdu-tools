@@ -8,8 +8,8 @@
 [![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
-[![npm](https://img.shields.io/badge/npm-v1.4.1-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
-[![NuGet](https://img.shields.io/badge/nuget-v1.4.1-blue?style=flat-square)](https://www.nuget.org/packages/Urdu-Tools)
+[![npm](https://img.shields.io/badge/npm-v1.4.2-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
+[![NuGet](https://img.shields.io/badge/nuget-v1.4.2-blue?style=flat-square)](https://www.nuget.org/packages/Urdu-Tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
@@ -234,23 +234,59 @@ dotnet add package Urdu-Tools
 
 ```csharp
 using UrduTools.Core.Normalization;
-using UrduTools.Core.Numbers;
-using UrduTools.Core.Sorting;
+using UrduTools.Core.Analysis;
 using UrduTools.Core.Search;
+using UrduTools.Core.Numbers;
+using UrduTools.Core.Tokenization;
+using UrduTools.Core.StringUtils;
+using UrduTools.Core.Sorting;
+using UrduTools.Core.Transliteration;
+using UrduTools.Core.Compound;
 
-// Normalize
+// ── Normalize ──────────────────────────────────────────
 UrduNormalizer.Normalize("عِلمٌ");                         // "علم"
-UrduNormalizer.Normalize("\u0627\u0653");                   // "آ"
+Fingerprint.Compute("عِلمٌ");                              // stable hash
+DiacriticsHelper.StripDiacritics("اُردُو");                // "اردو"
+NumeralsHelper.ToUrduNumerals("123");                      // "۱۲۳"
+AlifHelper.NormalizeAlif("إأآا");                          // unified alifs
+HamzaHelper.NormalizeHamza("ؤ");                           // normalized
 
-// Match
+// ── Analysis ───────────────────────────────────────────
+CharClassifier.IsUrduChar(0x0679);                         // true  (ٹ)
+CharClassifier.Classify(0x0628);                           // CharClass.ArabicLetter
+RtlDetector.IsRtl("اردو");                                // true
+
+// ── Search ─────────────────────────────────────────────
 UrduMatcher.Match("عِلمٌ", "علم").Matched;                 // true
+FuzzyMatcher.Score("کتاب", "کتابیں");                      // ~0.7
+UrduMatcher.GetAllNormalizations("عِلمٌ");                  // all forms
 
-// Numbers
+// ── Numbers ────────────────────────────────────────────
 NumberToWords.Convert(10_000_000);                          // "ایک کروڑ"
-NumberToWords.Convert(1, new() { Ordinal=true, Gender=Gender.Feminine }); // "پہلی"
+CurrencyFormatter.Format(5000);                            // "پانچ ہزار روپے"
+UrduNumerals.ToUrduNumerals(42);                           // "۴۲"
 
-// Sort
-UrduComparer.Sort(new[]{"ے","ا","ک","ب"}).ToList();        // ["ا","ب","ک","ے"]
+// ── Tokenization ───────────────────────────────────────
+UrduTokenizer.Tokenize("اردو ٹولز ایک لائبریری ہے");     // 5 tokens
+NgramHelper.CharNgrams("اردو", 2);                        // char n-grams
+
+// ── String Utils ───────────────────────────────────────
+UrduStringUtils.Reverse("اردو ٹولز");                     // reversed
+UrduStringUtils.WordCount("اردو ٹولز ایک لائبریری");     // 4
+UrduStringUtils.Truncate("بہت لمبا جملہ ہے", 10);        // truncated
+HtmlEntityDecoder.Decode("&amp;");                         // "&"
+
+// ── Sorting ────────────────────────────────────────────
+var list = new List<string> { "ے", "ا", "ک", "ب" };
+list.Sort(new UrduComparer());                             // ["ا","ب","ک","ے"]
+
+// ── Transliteration ────────────────────────────────────
+UrduRomanizer.ToRoman("پاکستان");                          // "pakistan"
+RomanUrduParser.FromRoman("pakistan");                      // "پاکستان"
+
+// ── Compound ───────────────────────────────────────────
+UrduCompoundDetector.DetectCompounds("کتاب خانہ اچھی جگہ ہے");
+UrduCompoundDetector.IsCompound("کتاب", "خانہ");           // CompoundMatch
 
 // Progressive normalization for DB lookup
 foreach (var form in UrduMatcher.GetAllNormalizations(userInput))
@@ -388,6 +424,19 @@ import type { CompoundSpan, CompoundMatch, CompoundOptions, CompoundType } from 
 import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from 'urdu-tools/compound'
 ```
 
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Compound;
+
+// Detect all compounds in a sentence
+List<CompoundSpan> spans = UrduCompoundDetector.DetectCompounds("کتاب خانہ اچھی جگہ ہے");
+// → [{ Text: "کتاب خانہ", Type: CompoundType.Affix, ... }]
+
+// Check if two words form a compound
+CompoundMatch result = UrduCompoundDetector.IsCompound("کتاب", "خانہ");
+// → { Matched: true, Type: CompoundType.Affix }
+```
+
 ---
 
 ### Normalization
@@ -432,6 +481,29 @@ fingerprint('نبیؐ') === fingerprint('نبی')     // true (honorific strippe
 fingerprint('علم\u200c') === fingerprint('علم') // true (ZWNJ stripped)
 ```
 
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Normalization;
+
+// Full normalization
+UrduNormalizer.Normalize("عِلمٌ");                              // "علم"
+UrduNormalizer.Normalize(text, new NormalizeOptions {
+    Kashida = true,
+    PresentationForms = true,
+    NormalizeCharacters = true   // ي→ی, ك→ک, ه→ہ
+});
+
+// Individual helpers
+DiacriticsHelper.StripDiacritics("اُردُو");                     // "اردو"
+AlifHelper.NormalizeAlif("إأآا");                               // unified
+HamzaHelper.NormalizeHamza("ؤ");                                // normalized
+NumeralsHelper.ToUrduNumerals("123");                           // "۱۲۳"
+NumeralsHelper.NormalizeNumerals("٣ and ۵");                    // ASCII digits
+
+// Fingerprint — canonical form for comparison
+Fingerprint.Compute("عِلمٌ") == Fingerprint.Compute("عَلم");   // true
+```
+
 ---
 
 ### Search & Matching
@@ -471,6 +543,27 @@ fuzzyMatch('کتاب', ['علم', 'کتاب', 'قلم'])
 
 fuzzyMatch('کتاب', ['کتابیں', 'کتب'])
 // → { candidate: 'کتابیں', score: ~0.7 }
+```
+
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Search;
+
+// Multi-layer matching
+MatchResult result = UrduMatcher.Match("عِلمٌ", "علم");
+// result.Matched == true, result.Layer == MatchLayer.StripDiacritics
+
+// All normalized forms for DB lookup
+IReadOnlyList<string> forms = UrduMatcher.GetAllNormalizations("عِلمٌ");
+foreach (var form in forms)
+{
+    var row = await db.LookupAsync(form);
+    if (row is not null) return row;
+}
+
+// Fuzzy matching
+double score = FuzzyMatcher.Score("کتاب", "کتابیں");  // ~0.7
+var (best, bestScore) = FuzzyMatcher.BestMatch("کتاب", candidates);
 ```
 
 ---
@@ -520,6 +613,22 @@ wordsToNumber('پانچ سو پانچ')   // 505n
 | کھرب | 1,000,000,000,000 |
 | نیل | 1,000,000,000,000,000 |
 
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Numbers;
+
+NumberToWords.Convert(42);                 // "بیالیس"
+NumberToWords.Convert(10_000_000);         // "ایک کروڑ"
+
+// Currency
+CurrencyFormatter.Format(505.50m);         // "پانچ سو پانچ روپے پچاس پیسے"
+CurrencyFormatter.Format(1000);            // "ایک ہزار روپے"
+
+// Numeral conversion
+UrduNumerals.ToUrduNumerals(123);          // "۱۲۳"
+UrduNumerals.FromUrduNumerals("۱۲۳");     // "123"
+```
+
 ---
 
 ### Tokenization
@@ -548,6 +657,17 @@ ngrams(tokens, 2)
 
 The tokenizer preserves ZWNJ (U+200C) within words — used by `joinCompounds()` to bind compound components into a single token.
 
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Tokenization;
+
+var tokens = UrduTokenizer.Tokenize("اردو ٹولز ایک لائبریری ہے");
+// → List<Token> with 5 tokens
+
+var ngrams = NgramHelper.CharNgrams("اردو", 2);
+// → ["ار", "رد", "دو"]
+```
+
 ---
 
 ### String Utilities
@@ -575,6 +695,17 @@ extractUrdu('The word علم means knowledge')
 // Decode HTML entities BEFORE normalize() — TinyMCE converts U+2019 → &rsquo;
 decodeHtmlEntities('کتاب&rsquo;خانہ')   // 'کتاب\u2019خانہ'
 decodeHtmlEntities('علم&nbsp;ہے')       // 'علم\u00A0ہے'
+```
+
+**C# / .NET:**
+```csharp
+using UrduTools.Core.StringUtils;
+
+UrduStringUtils.Reverse("پاکستان ہندوستان");           // "ہندوستان پاکستان"
+UrduStringUtils.Truncate("یہ ایک بہت لمبا جملہ ہے", 10); // truncated at word boundary
+UrduStringUtils.WordCount("پاکستان زندہ باد");          // 3
+UrduStringUtils.CharCount("عِلم");                      // 3 (grapheme clusters)
+HtmlEntityDecoder.Decode("&amp;");                       // "&"
 ```
 
 ---
@@ -617,6 +748,17 @@ sortKey('پاکستان')  // '030003091102280814'
 
 Diacritics are stripped before sort key generation — `عِلم` and `عَلم` sort to the same position.
 
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Sorting;
+
+var list = new List<string> { "ے", "ا", "ک", "ب" };
+list.Sort(new UrduComparer());                   // ["ا", "ب", "ک", "ے"]
+
+var comparer = new UrduComparer();
+comparer.Compare("ا", "ب");                     // negative (ا before ب)
+```
+
 ---
 
 ### Transliteration
@@ -633,6 +775,15 @@ toRoman('چھوٹا')       // 'chhota'
 
 fromRoman('pakistan')  // 'پاکستان' (best-effort, never throws)
 fromRoman('bharat')    // 'بھارت'
+```
+
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Transliteration;
+
+UrduRomanizer.ToRoman("پاکستان");       // "pakistan"
+UrduRomanizer.ToRoman("بھارت");          // "bharat"
+RomanUrduParser.FromRoman("pakistan");    // "پاکستان" (best-effort, never throws)
 ```
 
 ---
@@ -656,6 +807,24 @@ classifyChar('۱')   // 'numeral'
 
 isRTL('پاکستان')               // true
 getUrduDensity('پاکستان زندہ') // 0.28
+```
+
+**C# / .NET:**
+```csharp
+using UrduTools.Core.Analysis;
+
+// IsUrduChar checks Urdu-SPECIFIC characters only (not shared Arabic letters)
+CharClassifier.IsUrduChar(0x067E);            // true  (پ — Urdu-specific)
+CharClassifier.IsUrduChar(0x0628);            // false (ب — shared with Arabic)
+
+// Classify any character
+CharClassifier.Classify(0x067E);              // CharClass.UrduLetter
+CharClassifier.Classify(0x0628);              // CharClass.ArabicLetter
+CharClassifier.Classify(0x064E);              // CharClass.Diacritic
+
+// RTL detection
+RtlDetector.IsRtl("پاکستان");                // true
+RtlDetector.IsRtl("Hello");                  // false
 ```
 
 ---
