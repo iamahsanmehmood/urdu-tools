@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   publish-npm:
-    name: Publish npm → GitHub Packages
+    name: Publish npm
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,34 +24,21 @@ jobs:
         with:
           node-version: '22'
           cache: 'pnpm'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@iamahsanmehmood'
+          registry-url: 'https://registry.npmjs.org'
 
       - run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: pnpm --filter @iamahsanmehmood/urdu-tools typecheck
+        run: pnpm --filter urdu-tools typecheck
 
       - name: Test
-        run: pnpm --filter @iamahsanmehmood/urdu-tools test
+        run: pnpm --filter urdu-tools test
 
       - name: Build
-        run: pnpm --filter @iamahsanmehmood/urdu-tools build
-
-      - name: Publish to GitHub Packages
-        run: pnpm --filter @iamahsanmehmood/urdu-tools publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node for npmjs.org
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@iamahsanmehmood'
+        run: pnpm --filter urdu-tools build
 
       - name: Publish to npmjs.org
-        run: pnpm --filter @iamahsanmehmood/urdu-tools publish --no-git-checks --access public
+        run: pnpm --filter urdu-tools publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -73,18 +60,6 @@ jobs:
 
       - name: Pack
         run: dotnet pack packages/urdu-dotnet/UrduTools.Core/UrduTools.Core.csproj -c Release -o ./nupkg
-
-      - name: Add GitHub Packages source
-        run: |
-          dotnet nuget add source \
-            "https://nuget.pkg.github.com/iamahsanmehmood/index.json" \
-            --name github \
-            --username iamahsanmehmood \
-            --password ${{ secrets.GITHUB_TOKEN }} \
-            --store-password-in-clear-text
-
-      - name: Push to GitHub Packages
-        run: dotnet nuget push ./nupkg/*.nupkg --source github --skip-duplicate
 
       - name: Push to NuGet.org
         run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
@@ -112,13 +87,13 @@ jobs:
       - name: Install & build JS
         run: |
           pnpm install --frozen-lockfile
-          pnpm --filter @iamahsanmehmood/urdu-tools build
+          pnpm --filter urdu-tools build
 
       - name: Pack npm tarball
         run: |
           cd packages/urdu-js
           pnpm pack
-          mv *.tgz ../../iamahsanmehmood-urdu-tools-${{ github.ref_name }}.tgz
+          mv *.tgz ../../urdu-tools-${{ github.ref_name }}.tgz
 
       - name: Pack NuGet
         run: dotnet pack packages/urdu-dotnet/UrduTools.Core/UrduTools.Core.csproj -c Release -o ./nupkg
@@ -130,5 +105,5 @@ jobs:
           name: ${{ github.ref_name }}
           generate_release_notes: true
           files: |
-            iamahsanmehmood-urdu-tools-${{ github.ref_name }}.tgz
+            urdu-tools-${{ github.ref_name }}.tgz
             nupkg/*.nupkg

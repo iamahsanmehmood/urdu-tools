@@ -14,8 +14,8 @@
 [![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
-[![npm](https://img.shields.io/badge/npm-v1.2.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools)
-[![NuGet](https://img.shields.io/badge/nuget-v1.2.0-blue?style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
+[![npm](https://img.shields.io/badge/npm-v1.3.0-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
+[![NuGet](https://img.shields.io/badge/nuget-v1.3.0-blue?style=flat-square)](https://www.nuget.org/packages/UrduTools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
@@ -25,8 +25,8 @@
 
 [▶ Try the Live Playground](https://iamahsanmehmood.github.io/urdu-tools/) &nbsp;·&nbsp;
 [📖 Full API Documentation](https://iamahsanmehmood.github.io/urdu-tools/docs/) &nbsp;·&nbsp;
-[📦 npm Package](https://github.com/iamahsanmehmood/urdu-tools/pkgs/npm/urdu-tools) &nbsp;·&nbsp;
-[📦 NuGet Package](https://github.com/iamahsanmehmood/urdu-tools/pkgs/nuget/UrduTools.Core)
+[📦 npm Package](https://www.npmjs.com/package/urdu-tools) &nbsp;·&nbsp;
+[📦 NuGet Package](https://www.nuget.org/packages/UrduTools)
 
 </div>
 
@@ -184,10 +184,10 @@ No statistical model trained on general text reliably covers all four strategies
 
 | Package | Language | Install |
 |---------|----------|---------|
-| [`@iamahsanmehmood/urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install @iamahsanmehmood/urdu-tools` |
-| [`UrduTools.Core`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package UrduTools.Core` |
+| [`@iamahsanmehmood/urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install urdu-tools` |
+| [`UrduTools.Core`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package UrduTools` |
 
-> **Package registry:** GitHub Packages. See the [packages page](https://github.com/iamahsanmehmood/urdu-tools/packages) for authentication setup.
+> **Package registry:** Public registries (npmjs.com and nuget.org). No authentication required.
 
 Both packages have **zero runtime dependencies** and identical APIs.
 
@@ -198,12 +198,12 @@ Both packages have **zero runtime dependencies** and identical APIs.
 ### JavaScript / TypeScript
 
 ```bash
-npm install @iamahsanmehmood/urdu-tools
+npm install urdu-tools
 ```
 
 ```typescript
-import { normalize, match, numberToWords, sort, toRoman, fingerprint } from '@iamahsanmehmood/urdu-tools'
-import { detectCompounds, joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+import { normalize, match, numberToWords, sort, toRoman, fingerprint } from 'urdu-tools'
+import { detectCompounds, joinCompounds } from 'urdu-tools/compound'
 
 // Normalize before storage or search
 normalize('عِلمٌ')                    // → 'علم'   (strips diacritics)
@@ -235,7 +235,7 @@ joinCompounds('کتاب خانہ اچھی جگہ ہے')
 ### C# / .NET
 
 ```bash
-dotnet add package UrduTools.Core
+dotnet add package UrduTools
 ```
 
 ```csharp
@@ -282,7 +282,7 @@ import {
   joinCompounds,
   splitCompounds,
   isCompound
-} from '@iamahsanmehmood/urdu-tools/compound'
+} from 'urdu-tools/compound'
 ```
 
 #### Detection — all three layers working together
@@ -324,8 +324,8 @@ detectCompounds('انسائیکلوپیڈیا آف اسلام کا حوالہ')
 
 ```typescript
 // The critical downstream use: bind compounds BEFORE tokenizing
-import { joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
-import { tokenize } from '@iamahsanmehmood/urdu-tools'
+import { joinCompounds } from 'urdu-tools/compound'
+import { tokenize } from 'urdu-tools'
 
 const text = 'کتاب خانہ میں علم و عمل کی کتابیں ہیں'
 
@@ -390,8 +390,8 @@ detectCompounds(text, { affix: true,  izafat: false, lexicon: false })
 
 **Exported TypeScript types:**
 ```typescript
-import type { CompoundSpan, CompoundMatch, CompoundOptions, CompoundType } from '@iamahsanmehmood/urdu-tools/compound'
-import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from '@iamahsanmehmood/urdu-tools/compound'
+import type { CompoundSpan, CompoundMatch, CompoundOptions, CompoundType } from 'urdu-tools/compound'
+import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from 'urdu-tools/compound'
 ```
 
 ---
@@ -403,7 +403,7 @@ The normalization pipeline applies up to 12 layers in deterministic order. All l
 ```typescript
 import { normalize, stripDiacritics, normalizeAlif, normalizeHamza,
          normalizeCharacters, fingerprint, stripZeroWidth,
-         normalizeNumerals, removeKashida, normalizePresentationForms } from '@iamahsanmehmood/urdu-tools'
+         normalizeNumerals, removeKashida, normalizePresentationForms } from 'urdu-tools'
 ```
 
 **Pipeline layers:**
@@ -443,7 +443,7 @@ fingerprint('علم\u200c') === fingerprint('علم') // true (ZWNJ stripped)
 ### Search & Matching
 
 ```typescript
-import { match, fuzzyMatch, getAllNormalizations } from '@iamahsanmehmood/urdu-tools'
+import { match, fuzzyMatch, getAllNormalizations } from 'urdu-tools'
 ```
 
 **`match(query, target)`** — tries 9 progressively aggressive normalization layers until a match is found:
@@ -486,7 +486,7 @@ fuzzyMatch('کتاب', ['کتابیں', 'کتب'])
 Uses **bigint** throughout — South Asian numbers exceed `Number.MAX_SAFE_INTEGER` (پانچ نیل = 5×10¹⁵).
 
 ```typescript
-import { numberToWords, formatCurrency, toUrduNumerals, wordsToNumber } from '@iamahsanmehmood/urdu-tools'
+import { numberToWords, formatCurrency, toUrduNumerals, wordsToNumber } from 'urdu-tools'
 
 numberToWords(0n)                      // 'صفر'
 numberToWords(100n)                    // 'ایک سو'
@@ -531,7 +531,7 @@ wordsToNumber('پانچ سو پانچ')   // 505n
 ### Tokenization
 
 ```typescript
-import { tokenize, sentences, ngrams } from '@iamahsanmehmood/urdu-tools'
+import { tokenize, sentences, ngrams } from 'urdu-tools'
 
 tokenize('پاکستان ایک خوبصورت ملک ہے')
 // → [
@@ -560,7 +560,7 @@ The tokenizer preserves ZWNJ (U+200C) within words — used by `joinCompounds()`
 
 ```typescript
 import { reverse, truncate, wordCount, charCount,
-         extractUrdu, decodeHtmlEntities } from '@iamahsanmehmood/urdu-tools'
+         extractUrdu, decodeHtmlEntities } from 'urdu-tools'
 
 // Reverse word order (not characters — preserves Arabic shaping)
 reverse('پاکستان ہندوستان')     // 'ہندوستان پاکستان'
@@ -590,7 +590,7 @@ decodeHtmlEntities('علم&nbsp;ہے')       // 'علم\u00A0ہے'
 Handles InPage (dominant pre-Unicode Urdu DTP tool) and legacy Windows-1256 encoded data.
 
 ```typescript
-import { decodeInpage, detectEncoding, convertWindows1256ToUnicode } from '@iamahsanmehmood/urdu-tools'
+import { decodeInpage, detectEncoding, convertWindows1256ToUnicode } from 'urdu-tools'
 
 const result = decodeInpage(buffer, 'auto')
 // result.paragraphs → string[]
@@ -610,7 +610,7 @@ Canonical 39-letter Urdu alphabet order:
 `ء ا ب پ ت ٹ ث ج چ ح خ د ڈ ذ ر ڑ ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن ں و ہ ھ ی ے`
 
 ```typescript
-import { sort, compare, sortKey } from '@iamahsanmehmood/urdu-tools'
+import { sort, compare, sortKey } from 'urdu-tools'
 
 sort(['ے', 'ا', 'ک', 'ب'])        // → ['ا', 'ب', 'ک', 'ے']
 sort(['زبان', 'اردو', 'بہترین'])   // → ['اردو', 'بہترین', 'زبان']
@@ -628,7 +628,7 @@ Diacritics are stripped before sort key generation — `عِلم` and `عَلم`
 ### Transliteration
 
 ```typescript
-import { toRoman, fromRoman } from '@iamahsanmehmood/urdu-tools'
+import { toRoman, fromRoman } from 'urdu-tools'
 
 toRoman('پاکستان')     // 'pakistan'
 toRoman('بھارت')       // 'bharat'
@@ -646,7 +646,7 @@ fromRoman('bharat')    // 'بھارت'
 ### Analysis
 
 ```typescript
-import { isUrduChar, getScript, classifyChar, isRTL, getUrduDensity } from '@iamahsanmehmood/urdu-tools'
+import { isUrduChar, getScript, classifyChar, isRTL, getUrduDensity } from 'urdu-tools'
 
 isUrduChar('پ')     // true  (U+067E — Urdu-specific)
 isUrduChar('ب')     // false (U+0628 — shared with Arabic)
@@ -803,3 +803,5 @@ Want to see your name here? See [CONTRIBUTING.md](CONTRIBUTING.md) for how to ge
 > *"Urdu deserves the same engineering rigour we give to every other language."*
 
 </div>
+
+
