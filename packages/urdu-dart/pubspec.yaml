@@ -1,0 +1,22 @@
+name: urdu_tools
+description: >-
+  Comprehensive Urdu text processing library — normalization, analysis, search,
+  numbers, tokenization, string utilities, sorting, transliteration, compound
+  word detection, and legacy encoding. Zero dependencies. Full Flutter support.
+version: 1.4.2
+homepage: https://github.com/iamahsanmehmood/urdu-tools
+repository: https://github.com/iamahsanmehmood/urdu-tools
+issue_tracker: https://github.com/iamahsanmehmood/urdu-tools/issues
+topics:
+  - urdu
+  - nlp
+  - unicode
+  - text-processing
+  - rtl
+
+environment:
+  sdk: ^3.4.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.25.0
