@@ -10,17 +10,19 @@
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
 [![npm](https://img.shields.io/badge/npm-v1.4.2-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
 [![NuGet](https://img.shields.io/badge/nuget-v1.4.2-blue?style=flat-square)](https://www.nuget.org/packages/Urdu-Tools)
+[![pub.dev](https://img.shields.io/pub/v/urdu_tools.svg?style=flat-square&color=blue)](https://pub.dev/packages/urdu_tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
-**TypeScript · C#/.NET · Zero Dependencies · 471 Tests**
+**TypeScript · C#/.NET · Dart/Flutter · Zero Dependencies · 747 Tests**
 
 
 
 [▶ Try the Live Playground](https://iamahsanmehmood.github.io/urdu-tools/) &nbsp;·&nbsp;
 [📖 Full API Documentation](https://iamahsanmehmood.github.io/urdu-tools/docs/) &nbsp;·&nbsp;
 [📦 npm Package](https://www.npmjs.com/package/urdu-tools) &nbsp;·&nbsp;
-[📦 NuGet Package](https://www.nuget.org/packages/Urdu-Tools)
+[📦 NuGet Package](https://www.nuget.org/packages/Urdu-Tools) &nbsp;·&nbsp;
+[📦 pub.dev Package](https://pub.dev/packages/urdu_tools)
 
 
 
@@ -180,10 +182,11 @@ No statistical model trained on general text reliably covers all four strategies
 |---------|----------|---------|
 | [`urdu-tools`](packages/urdu-js) | TypeScript / JavaScript | `npm install urdu-tools` |
 | [`Urdu-Tools`](packages/urdu-dotnet) | C# / .NET 9 | `dotnet add package Urdu-Tools` |
+| [`urdu_tools`](packages/urdu-dart) | Dart / Flutter | `dart pub add urdu_tools` |
 
 > **Package registry:** Public registries (npmjs.com and nuget.org). No authentication required.
 
-Both packages have **zero runtime dependencies** and identical APIs.
+All three packages have **zero runtime dependencies** and identical APIs.
 
 ---
 
@@ -294,6 +297,60 @@ foreach (var form in UrduMatcher.GetAllNormalizations(userInput))
     var result = await db.LookupAsync(form);
     if (result is not null) return result;
 }
+```
+
+### Dart / Flutter
+
+```bash
+dart pub add urdu_tools
+```
+
+```dart
+import 'package:urdu_tools/urdu_tools.dart';
+
+// ── Normalize ──────────────────────────────────────────
+normalize('عِلمٌ');                         // 'علم'
+fingerprint('عِلمٌ');                       // stable hash
+stripDiacritics('اُردُو');                  // 'اردو'
+normalizeAlif('إأآا');                      // unified alifs
+normalizeHamza('ؤ');                        // normalized
+
+// ── Analysis ───────────────────────────────────────────
+isUrduChar('ٹ');                            // true
+classifyChar('ب');                          // CharClass.arabicLetter
+isRTL('اردو');                              // true
+
+// ── Search ─────────────────────────────────────────────
+match('عِلمٌ', 'علم').matched;              // true
+fuzzyMatch('کتاب', ['کتابیں', 'کتب']).candidate;  // 'کتابیں'
+getAllNormalizations('عِلمٌ');               // all forms
+
+// ── Numbers ────────────────────────────────────────────
+numberToWords(10000000);                    // 'ایک کروڑ'
+formatCurrency(5000, Currency.pkr);         // 'پانچ ہزار روپے'
+toUrduNumerals(42);                         // '۴۲'
+
+// ── Tokenization ───────────────────────────────────────
+tokenize('اردو ٹولز ایک لائبریری ہے');      // 5 tokens
+ngrams(['اردو', 'ٹولز'], 2);                // token n-grams
+
+// ── String Utils ───────────────────────────────────────
+reverse('اردو ٹولز');                       // reversed
+wordCount('اردو ٹولز ایک لائبریری');        // 4
+truncate('بہت لمبا جملہ ہے', 10);           // truncated
+decodeHtmlEntities('&amp;');                // '&'
+
+// ── Sorting ────────────────────────────────────────────
+final list = ['ے', 'ا', 'ک', 'ب'];
+sort(list);                                 // ['ا', 'ب', 'ک', 'ے']
+
+// ── Transliteration ────────────────────────────────────
+toRoman('پاکستان');                         // 'pakistan'
+fromRoman('pakistan');                      // 'پاکستان' (best-effort)
+
+// ── Compound ───────────────────────────────────────────
+detectCompounds('کتاب خانہ اچھی جگہ ہے');
+isCompound('کتاب', 'خانہ');                 // CompoundMatch
 ```
 
 ---
