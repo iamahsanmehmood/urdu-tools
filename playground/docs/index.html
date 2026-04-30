@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>API Docs · @iamahsanmehmood/urdu-tools</title>
-<meta name="description" content="Complete API reference for @iamahsanmehmood/urdu-tools — Normalization, Search, Numbers, Tokenization, Sorting, Transliteration, Encoding, Analysis."/>
+<title>API Docs · urdu-tools</title>
+<meta name="description" content="Complete API reference for urdu-tools — Normalization, Search, Numbers, Tokenization, Sorting, Transliteration, Encoding, Analysis."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet"/>
@@ -194,7 +194,7 @@ code[class*="language-"]{font-family:var(--font-code)!important;font-size:12px!i
     <div>
       <div class="hdr-title">Urdu Tools</div>
     </div>
-    <span class="hdr-pkg">@iamahsanmehmood/urdu-tools</span>
+    <span class="hdr-pkg">urdu-tools</span>
   </div>
   <div class="hdr-right">
     <a class="hdr-btn hdr-play" href="../">
@@ -315,11 +315,11 @@ code[class*="language-"]{font-family:var(--font-code)!important;font-size:12px!i
   <div id="tab-js" class="tab-pane active">
     <div class="code-wrap">
       <div class="code-hdr"><span class="code-lang">bash</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
-<pre class="language-bash"><code class="language-bash">npm install @iamahsanmehmood/urdu-tools
+<pre class="language-bash"><code class="language-bash">npm install urdu-tools
 # or
-pnpm add @iamahsanmehmood/urdu-tools
+pnpm add urdu-tools
 # or
-yarn add @iamahsanmehmood/urdu-tools</code></pre>
+yarn add urdu-tools</code></pre>
     </div>
     <div class="code-wrap" style="margin-top:12px">
       <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
@@ -332,7 +332,7 @@ yarn add @iamahsanmehmood/urdu-tools</code></pre>
   toRoman, fromRoman,
   isUrduChar, getScript, classifyChar, getUrduDensity,
   detectEncoding, decodeInpage,
-} from '@iamahsanmehmood/urdu-tools'</code></pre>
+} from 'urdu-tools'</code></pre>
     </div>
   </div>
 
@@ -962,7 +962,7 @@ interface CompoundOptions {
       </div>
       <div class="code-wrap">
         <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
-<pre class="language-typescript"><code class="language-typescript">import { detectCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+<pre class="language-typescript"><code class="language-typescript">import { detectCompounds } from 'urdu-tools/compound'
 
 // Affix-based compound (خانہ suffix):
 detectCompounds('کتاب خانہ بہت اچھا ہے')
@@ -1004,7 +1004,7 @@ detectCompounds('کتاب خانہ اور علم و عمل', { layers: ['affix']
       </div>
       <div class="code-wrap">
         <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
-<pre class="language-typescript"><code class="language-typescript">import { joinCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+<pre class="language-typescript"><code class="language-typescript">import { joinCompounds } from 'urdu-tools/compound'
 
 // Default binder: ZWNJ (U+200C) — invisible but meaningful
 joinCompounds('کتاب خانہ اچھا ہے')
@@ -1036,7 +1036,7 @@ joinCompounds('کتاب خانہ میں آب و ہوا اچھی ہے')
       </div>
       <div class="code-wrap">
         <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
-<pre class="language-typescript"><code class="language-typescript">import { splitCompounds } from '@iamahsanmehmood/urdu-tools/compound'
+<pre class="language-typescript"><code class="language-typescript">import { splitCompounds } from 'urdu-tools/compound'
 
 splitCompounds('کتاب‌خانہ')
 // → 'کتاب خانہ'   (ZWNJ → space)
@@ -1070,7 +1070,7 @@ interface CompoundMatch {
       </div>
       <div class="code-wrap">
         <div class="code-hdr"><span class="code-lang">typescript</span><button class="copy-btn" onclick="copy(this)">⎘ Copy</button></div>
-<pre class="language-typescript"><code class="language-typescript">import { isCompound } from '@iamahsanmehmood/urdu-tools/compound'
+<pre class="language-typescript"><code class="language-typescript">import { isCompound } from 'urdu-tools/compound'
 
 isCompound('کتاب', 'خانہ')
 // → { matched: true, type: 'affix' }
@@ -1096,7 +1096,7 @@ isCompound('کتاب', 'خانہ', { layers: ['lexicon'] })
     <code>COMPOUND_LEXICON</code> — <code>Map&lt;string, CompoundType&gt;</code> with 3,262 curated entries (echo compounds, synonym pairs, fixed expressions).
     <code>AFFIX_SET</code> — Set of all recognized affixes.
     <code>PREFIX_SET</code> / <code>SUFFIX_SET</code> — Partitioned prefix and suffix sets from UAWL.
-    Import: <code>import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from '@iamahsanmehmood/urdu-tools/compound'</code>
+    Import: <code>import { COMPOUND_LEXICON, AFFIX_SET, PREFIX_SET, SUFFIX_SET } from 'urdu-tools/compound'</code>
   </div>
 </section>
 
@@ -1372,13 +1372,13 @@ cd urdu-tools
 pnpm install
 
 # Run JS tests with coverage
-pnpm --filter @iamahsanmehmood/urdu-tools test:coverage
+pnpm --filter urdu-tools test:coverage
 
 # Run .NET tests
 dotnet test packages/urdu-dotnet
 
 # Build and preview playground
-pnpm --filter @iamahsanmehmood/urdu-tools build
+pnpm --filter urdu-tools build
 pnpm --filter urdu-tools-playground dev</code></pre>
   </div>
 </section>
@@ -1429,3 +1429,4 @@ sections.forEach(s => observer.observe(s))
 </script>
 </body>
 </html>
+

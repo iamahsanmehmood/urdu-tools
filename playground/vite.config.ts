@@ -8,7 +8,7 @@ export default defineConfig({
   base: '/urdu-tools/',
   resolve: {
     alias: {
-      '@iamahsanmehmood/urdu-tools': path.resolve(
+      'urdu-tools': path.resolve(
         __dirname,
         '../packages/urdu-js/dist/index.js'
       ),
@@ -25,3 +25,4 @@ export default defineConfig({
     },
   },
 })
+

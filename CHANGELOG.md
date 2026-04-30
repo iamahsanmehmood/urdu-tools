@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] – 2026-04-30
+
+### Fixed
+- Fixed playground build errors caused by package renaming.
+
+---
+
+## [1.3.0] – 2026-04-30
+
+### Changed
+- Simplified package names for public registry publishing:
+  - JS/TS package renamed from `@iamahsanmehmood/urdu-tools` to `urdu-tools` (npm).
+  - .NET package renamed from `UrduTools.Core` to `UrduTools` (NuGet).
+- Updated README documentation with simplified installation instructions.
+- Removed GitHub Packages publication step for the npm package (now exclusively published to npmjs.org).
+
+---
+
 ## [1.2.0] – 2026-04-28
 
 ### Added

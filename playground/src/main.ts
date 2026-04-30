@@ -12,7 +12,7 @@ import {
   isUrduChar, getScript, classifyChar, isRTL, getUrduDensity,
   detectEncoding, decodeInpage, convertWindows1256ToUnicode,
   detectCompounds, joinCompounds, splitCompounds, isCompound,
-} from '@iamahsanmehmood/urdu-tools'
+} from 'urdu-tools'
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
@@ -167,8 +167,8 @@ function card(o: CardOpts): string {
         <span class="card-badge" style="background:${o.color}18;color:${o.color};border:1px solid ${o.color}35">${o.badge}</span>
       </div>
       <div class="card-import">
-        <span><span class="i-keyword">import</span> { <span class="i-name">${o.importFn}</span> } <span class="i-from">from</span> <span class="i-path">'@iamahsanmehmood/urdu-tools'</span></span>
-        <button class="import-copy-btn" data-copy="import { ${o.importFn} } from '@iamahsanmehmood/urdu-tools'">⎘</button>
+        <span><span class="i-keyword">import</span> { <span class="i-name">${o.importFn}</span> } <span class="i-from">from</span> <span class="i-path">'urdu-tools'</span></span>
+        <button class="import-copy-btn" data-copy="import { ${o.importFn} } from 'urdu-tools'">⎘</button>
       </div>
       <div class="card-body">
         <div class="card-desc">${o.desc}</div>
@@ -267,7 +267,7 @@ $('app')!.innerHTML = `
       <div class="h-logo">اُ</div>
       <div>
         <div class="h-title">Urdu Tools Playground</div>
-        <div class="h-sub">@iamahsanmehmood/urdu-tools · v1.2.0 · 10 Modules</div>
+        <div class="h-sub">urdu-tools · v1.2.0 · 10 Modules</div>
       </div>
     </div>
     <div class="h-right">
@@ -1529,3 +1529,4 @@ wire('btn-is-compound', () => {
       </div>`, `${w1} + ${w2} → ${result.matched ? result.type : 'no match'}`)
   } catch (e) { setError('r-is-compound', String(e)) }
 })
+

@@ -7,8 +7,9 @@
     "lib": ["ES2022", "DOM"],
     "skipLibCheck": true,
     "paths": {
-      "@iamahsanmehmood/urdu-tools": ["../packages/urdu-js/dist/index.d.ts"]
+      "urdu-tools": ["../packages/urdu-js/dist/index.d.ts"]
     }
   },
   "include": ["src"]
 }
+

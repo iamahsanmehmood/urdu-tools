@@ -124,7 +124,7 @@ it('detects محنت مشقت', () => {
 **Step 5 — Run tests and submit a PR**
 
 ```bash
-pnpm --filter @iamahsanmehmood/urdu-tools test
+pnpm --filter urdu-tools test
 ```
 
 All 392+ tests must pass. Then open a PR — use the "Compound lexicon entry" type in the PR checklist.
@@ -177,16 +177,16 @@ pnpm install
 
 ```bash
 # JavaScript — all 392+ tests
-pnpm --filter @iamahsanmehmood/urdu-tools test
+pnpm --filter urdu-tools test
 
 # JavaScript with coverage report
-pnpm --filter @iamahsanmehmood/urdu-tools test:coverage
+pnpm --filter urdu-tools test:coverage
 
 # .NET — all 85+ tests
 dotnet test packages/urdu-dotnet/UrduTools.Core.Tests/UrduTools.Core.Tests.csproj
 
 # Build JS package (must succeed with 0 TypeScript errors)
-pnpm --filter @iamahsanmehmood/urdu-tools build
+pnpm --filter urdu-tools build
 ```
 
 ### Project structure
@@ -194,7 +194,7 @@ pnpm --filter @iamahsanmehmood/urdu-tools build
 ```
 urdu-tools/
 ├── packages/
-│   ├── urdu-js/                       # @iamahsanmehmood/urdu-tools (TypeScript)
+│   ├── urdu-js/                       # urdu-tools (TypeScript)
 │   │   ├── src/
 │   │   │   ├── compound/              # Compound word detection (Layer 1–3)
 │   │   │   │   ├── affix-data.ts      # UAWL prefix/suffix sets
@@ -331,8 +331,8 @@ Before submitting tests or lexicon entries, verify them in the [Live Playground]
 
 1. **Fork** and create a branch: `git checkout -b feat/my-change`
 2. **Write tests first** if adding a function — describe expected behaviour before implementing
-3. Run `pnpm --filter @iamahsanmehmood/urdu-tools test` — all tests must pass
-4. Run `pnpm --filter @iamahsanmehmood/urdu-tools build` — zero TypeScript errors
+3. Run `pnpm --filter urdu-tools test` — all tests must pass
+4. Run `pnpm --filter urdu-tools build` — zero TypeScript errors
 5. If C# was changed: `dotnet test` must pass
 6. **Open a PR** using the PR template — one focused change per PR
 
@@ -353,3 +353,4 @@ test: add long-text performance cases for sort()
 - **General questions or ideas** → [GitHub Discussions](https://github.com/iamahsanmehmood/urdu-tools/discussions)
 - **Bug or wrong output** → [Bug Report issue](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=bug_report.yml)
 - **Missing compound word** → [Missing Compound issue](https://github.com/iamahsanmehmood/urdu-tools/issues/new?template=compound-missing.yml) or use the [Playground report button](https://iamahsanmehmood.github.io/urdu-tools/)
+
