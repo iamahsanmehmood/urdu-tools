@@ -79,7 +79,7 @@ void main() {
       expect(unique(['پاکستان', 'ہندوستان']), hasLength(2));
     });
     test('large token list with duplicates', () {
-      final tokens = List.filled(100, 'رحم')..add('آباد');
+      final tokens = List<String>.filled(100, 'رحم', growable: true)..add('آباد');
       expect(unique(tokens), hasLength(2));
     });
   });

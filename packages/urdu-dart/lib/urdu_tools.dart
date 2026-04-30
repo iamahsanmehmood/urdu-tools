@@ -3,7 +3,7 @@
 /// This package provides utilities for normalization, tokenization, analysis,
 /// compound word handling, numbers, string manipulation, encoding detection,
 /// sorting, and transliteration for the Urdu language.
-library urdu_tools;
+library;
 
 export 'src/types.dart';
 

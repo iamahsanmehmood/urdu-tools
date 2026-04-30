@@ -2,6 +2,7 @@
 ///
 /// These mirror the TypeScript types in `packages/urdu-js/src/types.ts` using
 /// Dart-idiomatic naming and constructs.
+library;
 
 // ── Enums ────────────────────────────────────────────────────────────────────
 

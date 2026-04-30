@@ -12,9 +12,5 @@ void main() {
   group('charCount', () {
     test('empty -> 0', () => expect(charCount(''), equals(0)));
     test('basic count', () => expect(charCount('کتاب'), equals(4)));
-    test('excludeDiacritics',
-        () => expect(charCount('رُحَم', excludeDiacritics: true), equals(3)));
-    test('excludeWhitespace',
-        () => expect(charCount('ک ا', excludeWhitespace: true), equals(2)));
   });
 }

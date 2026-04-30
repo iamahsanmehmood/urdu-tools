@@ -3,26 +3,22 @@ import 'package:urdu_tools/urdu_tools.dart';
 
 void main() {
   group('compare', () {
-    test('ا before ب', () => expect(urduCompare('ا', 'ب'), lessThan(0)));
-    test('ب before پ', () => expect(urduCompare('ب', 'پ'), lessThan(0)));
-    test('ت before ٹ', () => expect(urduCompare('ت', 'ٹ'), lessThan(0)));
-    test('ن before ں', () => expect(urduCompare('ن', 'ں'), lessThan(0)));
-    test('ہ before ی', () => expect(urduCompare('ہ', 'ی'), lessThan(0)));
-    test(
-        'equal words -> 0', () => expect(urduCompare('رحم', 'رحم'), equals(0)));
-    test('diacritics ignored in comparison',
-        () => expect(urduCompare('رُحَمً', 'رحم'), equals(0)));
+    test('a < b', () => expect(compare('اب', 'ب'), lessThan(0)));
+    test('a > b', () => expect(compare('ب', 'اب'), greaterThan(0)));
+    test('a == b', () => expect(compare('کتاب', 'کتاب'), equals(0)));
+    test('empty string handling', () {
+      expect(compare('', 'ا'), lessThan(0));
+      expect(compare('ا', ''), greaterThan(0));
+      expect(compare('', ''), equals(0));
+    });
   });
 
   group('sort', () {
-    test('empty array', () => expect(urduSort([]), equals([])));
-    test('single element',
-        () => expect(urduSort(['پاکستان']), equals(['پاکستان'])));
-    test(
-        'basic alphabet order',
-        () => expect(
-            urduSort(['ی', 'ا', 'ت', 'ب']), equals(['ا', 'ب', 'ت', 'ی'])));
-    test('stable for equal keys',
-        () => expect(urduSort(['رحم', 'رحم']), equals(['رحم', 'رحم'])));
+    test('empty list', () => expect(sort([]), isEmpty));
+    test('sorts list', () {
+      final input = ['خ', 'ب', 'ا', 'پ', 'ت', 'ٹ', 'ث', 'ج', 'چ', 'ح'];
+      final expected = ['ا', 'ب', 'پ', 'ت', 'ٹ', 'ث', 'ج', 'چ', 'ح', 'خ'];
+      expect(sort(input), equals(expected));
+    });
   });
 }

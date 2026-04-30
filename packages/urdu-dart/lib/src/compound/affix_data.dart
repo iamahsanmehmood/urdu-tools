@@ -1,4 +1,5 @@
 /// Data arrays for affix detection.
+library;
 
 final List<String> suffixList = [
   // Place / location

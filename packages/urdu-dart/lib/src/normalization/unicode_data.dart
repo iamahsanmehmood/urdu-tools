@@ -2,6 +2,7 @@
 ///
 /// These tables are identical across JS, .NET, and Dart packages to guarantee
 /// identical normalization output.
+library;
 
 const List<(int, int)> diacriticRanges = [
   (0x0610, 0x061a),

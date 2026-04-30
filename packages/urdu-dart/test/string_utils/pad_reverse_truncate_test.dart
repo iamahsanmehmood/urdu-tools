@@ -7,11 +7,11 @@ void main() {
       expect(pad('رحم', 5), equals('  رحم'));
     });
     test('pads end when direction is end', () {
-      expect(pad('رحم', 5, paddingChar: ' ', direction: PadDirection.end),
+      expect(pad('رحم', 5, ' ', 'end'),
           equals('رحم  '));
     });
     test('custom padding character', () {
-      expect(pad('رحم', 5, paddingChar: '-'), equals('--رحم'));
+      expect(pad('رحم', 5, '-'), equals('--رحم'));
     });
     test('no padding when length already met', () {
       expect(pad('رحم', 3), equals('رحم'));

@@ -8,11 +8,13 @@ String _classifyTokenType(String text) {
   for (final r in runes) {
     final ch = String.fromCharCode(r);
     final cls = classifyChar(ch);
-    if (cls == CharClass.urduLetter)
+    if (cls == CharClass.urduLetter) {
       urdu++;
-    else if (cls == CharClass.latin)
+    } else if (cls == CharClass.latin) {
       latin++;
-    else if (cls == CharClass.numeral) num++;
+    } else if (cls == CharClass.numeral) {
+      num++;
+    }
   }
   final total = runes.length;
   if (num == total) return 'numeral';

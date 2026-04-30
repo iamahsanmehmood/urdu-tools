@@ -52,10 +52,10 @@ void main() {
             numberToWords(2, const NumberToWordsOptions(ordinal: true)),
             equals('دوسرا')));
     test(
-        'ordinal 11 -> گیارھواں',
+        'ordinal 11 -> گیارہواں',
         () => expect(
             numberToWords(11, const NumberToWordsOptions(ordinal: true)),
-            equals('گیارھواں')));
+            equals('گیارہواں')));
   });
 
   group('wordsToNumber', () {
