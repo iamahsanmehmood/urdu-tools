@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   packages: write
+  id-token: write # Required for pub.dev OIDC publishing
 
 jobs:
   publish-npm:
@@ -63,6 +64,34 @@ jobs:
 
       - name: Push to NuGet.org
         run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+
+  publish-dart:
+    name: Publish Dart to pub.dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+        working-directory: packages/urdu-dart
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+        working-directory: packages/urdu-dart
+
+      - name: Analyze project source
+        run: dart analyze
+        working-directory: packages/urdu-dart
+
+      - name: Run tests
+        run: dart test
+        working-directory: packages/urdu-dart
+
+      - name: Publish to pub.dev
+        run: dart pub publish --force
+        working-directory: packages/urdu-dart
 
   create-release:
     name: Create GitHub Release

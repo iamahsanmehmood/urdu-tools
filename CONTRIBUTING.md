@@ -55,6 +55,20 @@ All report buttons generate a structured GitHub issue with your input pre-filled
 
 The compound lexicon (`packages/urdu-js/src/compound/lexicon-data.ts`) is the **most impactful area** for community contributions. Every entry you add improves detection accuracy for all users. You do not need programming experience — if you know Urdu, you can contribute.
 
+### Cross-Language Synchronization (The "Source of Truth")
+
+> [!IMPORTANT]  
+> The `urdu-tools` library is implemented in three languages: **TypeScript**, **C#**, and **Dart**.
+> 
+> The **TypeScript** package (`packages/urdu-js/`) is the **Source of Truth** for all core datasets (like compound lexicons, affix sets, and character arrays). 
+> 
+> **To prevent data discrepancies:** Any Pull Request that adds a new compound word or updates a dataset **must** mirror those exact changes in all three packages:
+> 1. `packages/urdu-js/...` (TypeScript)
+> 2. `packages/urdu-dotnet/...` (C# / .NET)
+> 3. `packages/urdu-dart/...` (Dart / Flutter)
+> 
+> This guarantees that all platforms behave identically for all users. In the future, this sync process may be automated, but for now, it is a strict PR requirement.
+
 ### What qualifies as a compound entry
 
 A compound (مرکب لفظ) is a fixed multi-word expression that functions as a single semantic unit. The words must always appear together with this specific meaning.
@@ -225,13 +239,17 @@ urdu-tools/
 
 ### Adding a new function
 
-1. **Implement in TypeScript first** (`packages/urdu-js/src/`)
+### Adding a new function or dataset
+
+1. **Implement in TypeScript first** (`packages/urdu-js/src/`) - This is the Source of Truth.
 2. **Write tests** in `packages/urdu-js/tests/` — see testing requirements below
 3. **Export** from the module's `index.ts` and the package root `src/index.ts`
 4. **Port to C#** in `packages/urdu-dotnet/UrduTools.Core/` with identical behaviour and API
 5. **Write C# tests** in `packages/urdu-dotnet/UrduTools.Core.Tests/`
-6. **Add to the playground** in `playground/src/main.ts` if it's user-facing
-7. **Update docs** in `playground/docs/index.html` if public API changed
+6. **Port to Dart** in `packages/urdu-dart/lib/` with identical behaviour and API
+7. **Write Dart tests** in `packages/urdu-dart/test/`
+8. **Add to the playground** in `playground/src/main.ts` if it's user-facing
+9. **Update docs** in `playground/docs/index.html` if public API changed
 
 ### TypeScript conventions
 
