@@ -1,10 +1,4 @@
-<div align="right">
-
 **اردو ٹولز** · Urdu Tools
-
-</div>
-
-<div align="center">
 
 # urdu-tools
 
@@ -14,21 +8,21 @@
 [![CI – .NET](https://img.shields.io/github/actions/workflow/status/iamahsanmehmood/urdu-tools/ci-dotnet.yml?label=CI%20%E2%80%93%20.NET&style=flat-square)](https://github.com/iamahsanmehmood/urdu-tools/actions/workflows/ci-dotnet.yml)
 [![Live Playground](https://img.shields.io/badge/▶_Live_Playground-Try_it_now-7c5cfc?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/)
 [![Docs](https://img.shields.io/badge/📖_Docs-API_Reference-4f9cf9?style=flat-square)](https://iamahsanmehmood.github.io/urdu-tools/docs/)
-[![npm](https://img.shields.io/badge/npm-v1.4.0-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
-[![NuGet](https://img.shields.io/badge/nuget-v1.4.0-blue?style=flat-square)](https://www.nuget.org/packages/Urdu-Tools)
+[![npm](https://img.shields.io/badge/npm-v1.4.1-blue?style=flat-square)](https://www.npmjs.com/package/urdu-tools)
+[![NuGet](https://img.shields.io/badge/nuget-v1.4.1-blue?style=flat-square)](https://www.nuget.org/packages/Urdu-Tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-471_passing-brightgreen?style=flat-square)](#)
 
 **TypeScript · C#/.NET · Zero Dependencies · 471 Tests**
 
-<br/>
+
 
 [▶ Try the Live Playground](https://iamahsanmehmood.github.io/urdu-tools/) &nbsp;·&nbsp;
 [📖 Full API Documentation](https://iamahsanmehmood.github.io/urdu-tools/docs/) &nbsp;·&nbsp;
 [📦 npm Package](https://www.npmjs.com/package/urdu-tools) &nbsp;·&nbsp;
 [📦 NuGet Package](https://www.nuget.org/packages/Urdu-Tools)
 
-</div>
+
 
 ---
 
@@ -790,9 +784,7 @@ Want to see your name here? See [CONTRIBUTING.md](CONTRIBUTING.md) for how to ge
 
 ## Author
 
-<div align="center">
-
-<img src="https://avatars.githubusercontent.com/u/108397884?v=4" width="96" height="96" style="border-radius: 50%;" alt="Ahsan Mehmood"/>
+![Ahsan Mehmood](https://avatars.githubusercontent.com/u/108397884?v=4)
 
 ### Ahsan Mehmood
 
@@ -801,7 +793,5 @@ Want to see your name here? See [CONTRIBUTING.md](CONTRIBUTING.md) for how to ge
 [![Dev.to](https://img.shields.io/badge/Dev.to-Articles-0A0A0A?style=flat-square&logo=devdotto)](https://dev.to/iamahsanmehmood)
 
 > *"Urdu deserves the same engineering rigour we give to every other language."*
-
-</div>
 
 

@@ -31,7 +31,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build JS package
-        run: pnpm --filter @iamahsanmehmood/urdu-tools build
+        run: pnpm --filter urdu-tools build
 
       - name: Build Playground
         run: pnpm --filter urdu-tools-playground build
